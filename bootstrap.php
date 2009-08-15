@@ -18,5 +18,5 @@ $WPLessPlugin = WPPluginToolkitPlugin::create('WPLess', __FILE__);
 
 if (!is_admin())
 {
-  add_action('wp_print_styles', array($WPLessPlugin, 'process'));
+  add_action('wp_print_styles', array($WPLessPlugin, 'processStylesheets'));
 }
