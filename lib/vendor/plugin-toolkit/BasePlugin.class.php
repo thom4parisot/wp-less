@@ -16,7 +16,6 @@ abstract class WPPluginToolkitPlugin
    * @since 1.0
    * @version 1.0
    * @param WPPluginToolkitConfiguration $configuration
-   * @return 
    */
   public function __construct(WPPluginToolkitConfiguration $configuration)
   {
@@ -32,7 +31,6 @@ abstract class WPPluginToolkitPlugin
    * Autoloads classes for this plugin
    * 
    * @author oncletom
-   * @static
    * @return boolean
    * @param string $className
    * @version 1.0
@@ -44,34 +42,28 @@ abstract class WPPluginToolkitPlugin
 
     if (!preg_match('/^'.$prefix.'/U', $className))
     {
-      return false;
+      return;
     }
 
-    $dirname = $this->configuration->getPluginPath();
-    $filename = str_replace($prefix, '', $className).'.class.php';
+    $libdir = $this->configuration->getDirname().'/lib';
+    $path = preg_replace('/([A-Z]{1})/U', "/$1", str_replace($prefix, '', $className)).'.class.php';
 
-    /*
-     * Direct File
-     */
-    if (file_exists($dirname.'/'.$filename))
+    if (file_exists($libdir.$path))
     {
-      require $dirname.'/'.$filename;
-    }
-    /*
-     * Subdir
-     */
-    else if (preg_match('/^([A-Z]{1}[a-z0-9]+)[A-Z]/U', $filename, $matches))
-    {
-      require $dirname.'/'.strtolower($matches[1]).'/'.str_replace($matches[1], '', $filename);
+      require $libdir.$path;
     }
 
-    return true;
+    return false;
   }
 
   /**
    * WordPress plugin builder
    * 
    * @author oncletom
+   * @static
+   * @final
+   * @since 1.0
+   * @version 1.0
    * @param string $baseClassName
    * @param string $baseFileName
    * @return $baseClassName+Plugin instance
@@ -93,6 +85,8 @@ abstract class WPPluginToolkitPlugin
    * Returns the current configuration
    * 
    * @author oncletom
+   * @since 1.0
+   * @version 1.0
    * @return WPPluginToolkitConfiguration instance
    */
   public function getConfiguration()
