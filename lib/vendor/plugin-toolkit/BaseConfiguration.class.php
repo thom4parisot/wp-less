@@ -29,6 +29,7 @@ abstract class WPPluginToolkitConfiguration
   protected function configure()
   {
     $this->configureOptions();
+    do_action($this->unix_name.'_configuration_configure', $this);
   }
 
   /**
@@ -65,6 +66,7 @@ abstract class WPPluginToolkitConfiguration
     //$this->options = new $baseClassName.'OptionCollection';
 
     $this->configure();
+    do_action($this->unix_name.'_configuration_construct', $this);
   }
 
   /**
@@ -121,6 +123,19 @@ abstract class WPPluginToolkitConfiguration
   {
     return $this->plugin_path;
   }  
+
+  /**
+   * Returns unix name of the plugin
+   * 
+   * @author oncletom
+   * @since 1.0
+   * @version 1.0
+   * @return string
+   */
+  public function getUnixName()
+  {
+    return $this->unix_name;
+  }
 
   /**
    * Returns the upload dir for this configuration class (common to all instances)
@@ -181,6 +196,7 @@ abstract class WPPluginToolkitConfiguration
 
     $this->dirname =      dirname($this->filename);
     $this->plugin_path =  preg_replace('#(.+)([^/]+/[^/]+)$#sU', "$2", $this->filename);
+    do_action($this->unix_name.'_configuration_setup_path', $this);
   }
 
   /**

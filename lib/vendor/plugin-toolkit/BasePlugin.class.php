@@ -11,6 +11,7 @@ abstract class WPPluginToolkitPlugin
   protected static $autoload_configured = false;
 
   /**
+   * Plugin constructor
    * 
    * @author oncletom
    * @since 1.0
@@ -25,6 +26,8 @@ abstract class WPPluginToolkitPlugin
     {
       spl_autoload_register(array($this, 'configureAutoload'));
     }
+
+    do_action($this->configuration->getUnixName().'_plugin_construct', $this);
   }
 
   /**
@@ -76,7 +79,10 @@ abstract class WPPluginToolkitPlugin
     $class =          $baseClassName.'Plugin';
     $configuration =  $baseClassName.'Configuration';
 
+    list($class, $configuration) = apply_filters('plugin-toolkit_create', array($class, $configuration));
+
     $object = new $class(new $configuration($baseClassName, $baseFileName));
+    do_action('plugin-toolkit_create', $object);
 
     return $object;
   }
