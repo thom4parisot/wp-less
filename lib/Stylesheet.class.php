@@ -40,6 +40,7 @@ class WPLessStylesheet
     }
 
     $this->configurePath();
+    do_action('wp-less_stylesheet_construct', $this);
   }
 
   /**
@@ -57,7 +58,7 @@ class WPLessStylesheet
 
     $target_path .= '.css';
 
-    return $target_path;
+    return apply_filters('wp-less_stylesheet_compute_target_path', $target_path);
   }
 
   /**
@@ -89,7 +90,7 @@ class WPLessStylesheet
    */
   public function getSourceContent()
   {
-    return $this->source_path;
+    return apply_filters('wp-less_stylesheet_source_content', file_get_contents($this->source_path));
   }
 
   /**
@@ -133,7 +134,7 @@ class WPLessStylesheet
       $this->compiler = new lessc($this->getSourcePath());
     }
 
-    return $this->compiler->parse();
+    return apply_filters('wp-less_stylesheet_target_content', $this->compiler->parse());
   }
 
   /**
@@ -189,8 +190,10 @@ class WPLessStylesheet
 
     try
     {
+      do_action('wp-less_stylesheet_save_pre', $this);
       lessc::ccompile($this->getSourcePath(), $this->getTargetPath());
       chmod($this->getTargetPath(), 0666);
+      do_action('wp-less_stylesheet_save_post', $this);
     }
     catch(Exception $e)
     {
