@@ -56,6 +56,8 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 
       $wp_styles->registered[$style_id]->src = $stylesheet->getTargetUri();
     }
+
+    do_action('wp-less_plugin_process_stylesheets', $styles);
   }
 
   /**
@@ -79,7 +81,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
       }
     }
 
-    return $to_process;
+    return apply_filters('wp-less_get_queued_styles_to_process', $to_process);
   }
 
   /**
