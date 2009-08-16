@@ -13,18 +13,49 @@ if (!class_exists('BasePlugin'))
  */
 class WPLessPlugin extends WPPluginToolkitPlugin
 {
+  /**
+   * @static
+   * @var Pattern used to match stylesheet files to process them as pure CSS
+   */
   public static $match_pattern = '/\.less$/U';
 
+  /**
+   * Process all stylesheets to compile just in time
+   * 
+   * @author oncletom
+   * @since 1.0
+   * @version 1.0
+   */
   public function processStylesheets()
   {
-    $styles = $this->getQueuedStylesToProcess();
+    $styles =     $this->getQueuedStylesToProcess();
+    $wp_styles =  $this->getStyles();
+    $upload_dir = $this->configuration->getUploadDir();
 
     if (empty($styles))
     {
       return;
     }
-    
-    var_dump($styles);
+
+    if (!wp_mkdir_p($upload_dir))
+    {
+      throw new WPLessException(sprintf('The upload dir folder (`%s`) is not writable from %s.', $upload_dir, get_class($this)));
+    }
+
+    WPLessStylesheet::$upload_dir = $this->configuration->getUploadDir();
+    WPLessStylesheet::$upload_uri = $this->configuration->getUploadUrl();
+
+    foreach ($styles as $style_id)
+    {
+      $stylesheet = new WPLessStylesheet($wp_styles->registered[$style_id]);
+
+      if ($stylesheet->hasToCompile())
+      {
+        $stylesheet->save();
+      }
+
+      $wp_styles->registered[$style_id]->src = $stylesheet->getTargetUri();
+    }
   }
 
   /**
