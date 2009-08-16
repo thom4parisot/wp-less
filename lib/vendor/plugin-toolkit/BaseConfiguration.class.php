@@ -5,6 +5,9 @@ abstract class WPPluginToolkitConfiguration
   const UNIX_NAME = null;
   const I18N_DIR =  'i18n';
 
+  protected static  $upload_dir,
+                    $upload_url;
+
   protected $base_class_name,
             $base_dirname,
             $base_filename,
@@ -13,7 +16,8 @@ abstract class WPPluginToolkitConfiguration
             $i18n_path,
             $i18n_path_from_plugins,
             $options,
-            $plugin_path;
+            $plugin_path,
+            $unix_name;
 
   /**
    * Launch the configure process
@@ -48,13 +52,16 @@ abstract class WPPluginToolkitConfiguration
   public function __construct($baseClassName, $baseFileName)
   {
     $unix_name_pattern = $baseClassName.'Configuration::UNIX_NAME';
-    if (is_null(constant($unix_name_pattern)))
+    $this->unix_name =   constant($unix_name_pattern);
+
+    if (is_null($this->unix_name))
     {
       throw new Exception(sprintf('%s has not been configured for %sConfiguration.', $unix_name_pattern, $baseClassName));
     }
 
     $this->base_class_name =  $baseClassName;
     $this->setupPath($baseFileName, constant($unix_name_pattern));
+    $this->setupPathGlobal();
     //$this->options = new $baseClassName.'OptionCollection';
 
     $this->configure();
@@ -116,6 +123,32 @@ abstract class WPPluginToolkitConfiguration
   }  
 
   /**
+   * Returns the upload dir for this configuration class (common to all instances)
+   * 
+   * @author oncletom
+   * @since 1.0
+   * @version 1.0
+   * @return string
+   */
+  public function getUploadDir()
+  {
+    return self::$upload_dir;
+  }
+
+  /**
+   * Returns the upload URL for this configuration class (common to all instances)
+   * 
+   * @author oncletom
+   * @since 1.0
+   * @version 1.0
+   * @return string
+   */
+  public function getUploadUrl()
+  {
+    return self::$upload_url;
+  }
+
+  /**
    * Build paths for various access
    * 
    * @author oncletom
@@ -130,6 +163,9 @@ abstract class WPPluginToolkitConfiguration
     $this->base_filename =    $baseFileName;
     $this->base_dirname =     dirname($baseFileName);
 
+    /*
+     * Plugin & i18n path
+     */
     if (function_exists('is_link') && is_link(WP_PLUGIN_DIR.'/'.$unix_name))
     {
       $this->filename =                 WP_PLUGIN_DIR.'/'.$unix_name.'/'.basename($this->base_filename);
@@ -145,5 +181,59 @@ abstract class WPPluginToolkitConfiguration
 
     $this->dirname =      dirname($this->filename);
     $this->plugin_path =  preg_replace('#(.+)([^/]+/[^/]+)$#sU', "$2", $this->filename);
+  }
+
+  /**
+   * Resolves global upload path as WP does not provide any clean and independant solution for that
+   * 
+   * It's barely based on the logic of `wp_upload_dir` function.
+   * 
+   * @author oncletom
+   * @since 1.0
+   * @version 1.0
+   * @return boolean
+   */
+  protected function setupPathGlobal()
+  {
+    if (isset(self::$upload_url))
+    {
+      return false;
+    }
+
+    $siteurl =      get_option('siteurl');
+    $upload_path =  trim(get_option('upload_path'));
+    $subdir =       '/'.$this->unix_name;
+
+    if (defined('UPLOADS'))
+    {
+      $dir = ABSPATH.UPLOADS;
+      $url = trailingslashit($siteurl).UPLOADS;
+    }
+    else
+    {
+      $dir = $upload_path ? $upload_path : WP_CONTENT_DIR.'/uploads';
+      $dir = path_join(ABSPATH, $dir);
+
+      if (!$url = get_option( 'upload_url_path'))
+      {
+        $url = empty($upload_path) or ($upload_path == $dir)
+                ? WP_CONTENT_URL . '/uploads'
+                : trailingslashit($siteurl).$upload_path;
+      }
+    }
+    
+    $uploads = apply_filters('upload_dir', array(
+      'path' =>     $dir,
+      'url' =>      $url,
+      'subdir' =>   $subdir,
+      'basedir' =>  $dir.$subdir,
+      'baseurl' =>  $url.$subdir,
+      'error' =>    false,
+    ));
+
+    self::$upload_dir = $uploads['basedir'];
+    self::$upload_url = $uploads['baseurl'];
+
+    return $uploads['error'] ? false : true;
   }
 }
