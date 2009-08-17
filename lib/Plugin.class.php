@@ -20,6 +20,30 @@ class WPLessPlugin extends WPPluginToolkitPlugin
   public static $match_pattern = '/\.less$/U';
 
   /**
+   * Process a single stylesheet
+   * 
+   * @author oncletom
+   * @since 1.1
+   * @version 1.0
+   * @param string $handle
+   * @return WPLessStylesheet
+   */
+  public function processStylesheet($handle)
+  {
+    $wp_styles = $this->getStyles();
+    $stylesheet = new WPLessStylesheet($wp_styles->registered[$style_id]);
+
+    if ($stylesheet->hasToCompile())
+    {
+      $stylesheet->save();
+    }
+
+    $wp_styles->registered[$style_id]->src = $stylesheet->getTargetUri();
+    
+    return $stylesheet;
+  }
+
+  /**
    * Process all stylesheets to compile just in time
    * 
    * @author oncletom
@@ -47,14 +71,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 
     foreach ($styles as $style_id)
     {
-      $stylesheet = new WPLessStylesheet($wp_styles->registered[$style_id]);
-
-      if ($stylesheet->hasToCompile())
-      {
-        $stylesheet->save();
-      }
-
-      $wp_styles->registered[$style_id]->src = $stylesheet->getTargetUri();
+      $this->processStylesheet($style_id);
     }
 
     do_action('wp-less_plugin_process_stylesheets', $styles);

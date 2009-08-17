@@ -42,6 +42,11 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
  1. Activate it through your WordPress plugins administration page
 
 == Changelog ==
+= Version 1.1 =
+ * updated plugin-toolkit to 1.1
+ * added `bootstrap-for-theme.php` to let themers bundle the plugin
+ * theme bootstrap will only load if the plugin is not alread activated
+
 = Version 1.0 =
 
  * implemented the forthcoming `plugin-toolkit` to speed up plugin development
@@ -69,10 +74,10 @@ Nothing special. The LESS parser is fully compliant with CSS syntax.
 It means nothing will be broken so don't worry.
 
 = I'm a themer and I don't want to ask my users to activate this plugin =
-It's a very good moto. Anyway, at the moment I don't provide any helper for this purpose.  
-It is planned for later.
+It's a very good moto. Since the 1.1 release, there is a special bootstrap file: `bootstrap-for-theme.php`.  
+Everything is prepared and documented inside, with examples and hint.
 
-If you are familiar with OOP programmation, you can make your way out of this. The source code is fully self-documented.
+Just help yourself!
 
 == Screenshots ==
 
