@@ -5,7 +5,7 @@ Description: LESS extends CSS with variables, mixins, operations and nested rule
 Author: Oncle Tom
 Version: 1.0
 Author URI: http://case.oncle-tom.net/
-Plugin URI: hhttp://wordpress.org/extend/plugins/wp-less/
+Plugin URI: http://wordpress.org/extend/plugins/wp-less/
 
   This plugin is released under version 3 of the GPL:
   http://www.opensource.org/licenses/gpl-3.0.html
