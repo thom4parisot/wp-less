@@ -2,6 +2,7 @@
 /**
  * Base plugin class to extend
  * 
+ * @version 1.1
  * @author oncletom
  * @package plugin-toolkit
  */
@@ -9,6 +10,8 @@ abstract class WPPluginToolkitPlugin
 {
   protected $configuration;
   protected static $autoload_configured = false;
+
+  protected static $instances = array();
 
   /**
    * Plugin constructor
@@ -69,9 +72,10 @@ abstract class WPPluginToolkitPlugin
    * @version 1.0
    * @param string $baseClassName
    * @param string $baseFileName
+   * @param string $singleton_identifier[optional]
    * @return $baseClassName+Plugin instance
    */
-  public final static function create($baseClassName, $baseFileName)
+  public final static function create($baseClassName, $baseFileName, $singleton_identifier = null)
   {
     require_once dirname(__FILE__).'/BaseConfiguration.class.php';
     require_once dirname($baseFileName).'/lib/Configuration.class.php';
@@ -82,6 +86,12 @@ abstract class WPPluginToolkitPlugin
     list($class, $configuration) = apply_filters('plugin-toolkit_create', array($class, $configuration));
 
     $object = new $class(new $configuration($baseClassName, $baseFileName));
+
+    if (!is_null($singleton_identifier) && $singleton_identifier)
+    {
+      call_user_func(array($class, 'setInstance'), $singleton_identifier, $object);
+    }
+
     do_action('plugin-toolkit_create', $object);
 
     return $object;
@@ -98,5 +108,43 @@ abstract class WPPluginToolkitPlugin
   public function getConfiguration()
   {
     return $this->configuration;
+  }
+
+  /**
+   * Retrieves the instance of an object
+   * If no identifier is given, the first created instance is returned
+   * 
+   * @author oncletom
+   * @since 1.1
+   * @version 1.0
+   * @static
+   * @param string $identifier [optional]
+   * @return object
+   */
+  public static function getInstance($identifier = null)
+  {
+    if (is_null($identifier))
+    {
+      $identifier = key(self::$instances);
+    }
+
+    return isset(self::$instances[$identifier]) ? self::$instances[$identifier] : null;
+  }
+
+  /**
+   * Stores an instance of a created object
+   * Self storage is so good :)
+   * 
+   * @author oncletom
+   * @since 1.1
+   * @version 1.0
+   * @static
+   * @protected
+   * @param string $identifier
+   * @param object $object
+   */
+  protected static function setInstance($identifier, $object)
+  {
+    self::$instances[$identifier] = $object;
   }
 }
