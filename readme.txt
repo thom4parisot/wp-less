@@ -12,7 +12,9 @@ Implementation of LESS (Leaner CSS) in order to make themes development easier.
 == Description ==
 [LESS](http://lesscss.org) is a templating language based on top of CSS. It provides numerous enhancements to speed up development and make its maintenance easier.
 
-You can count on:
+Theme developers can even bundle the plugin without worrying about conflicts: just include the special `bootstrap-for-theme.php` and read its instructions.
+
+= Features =
 
  * Variables
  * Mixins (inheritance of rules)
@@ -23,11 +25,14 @@ You can count on:
 The plugin lets you concentrate on what you need: coding CSS. Everything else is handled automatically, from cache management to user delivery.  
 Seriously.
 
+= Requirements =
+
 The sole requirement is to use WordPress API and LESS convention: the `.less` extension.
 
 **Minimal Requirements**: PHP 5.1.2 and WordPress 2.8.  
-**Relies on**: [LESSPHP 0.1.5](http://leafo.net/lessphp/), [plugin-toolkit](http://wordpress.org/extend/plugins/plugin-toolkit/).
+**Relies on**: [LESSPHP 0.1.6](http://leafo.net/lessphp/), [plugin-toolkit](http://wordpress.org/extend/plugins/plugin-toolkit/).
 
+*Notice*: in case you'd like to drop the usage of this plugin, it's safe to do it. You will just need to convert back your stylesheets to CSS.
 
 == Installation ==
 
@@ -43,16 +48,20 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 
 == Changelog ==
 = Version 1.1 =
- * updated plugin-toolkit to 1.1
- * added `bootstrap-for-theme.php` to let themers bundle the plugin
+ * added `bootstrap-for-theme.php` to let themers bundle the plugin in their own themes
+ * added `WPLessPlugin::registerHooks` methods to ease hooks activation
  * theme bootstrap will only load if the plugin is not alread activated
+ * `WPLessPlugin::processStylesheets()` and `WPLessPlugin::processStylesheet()` now accepts an additional parameter to force the rebuild
+ * lessphp: updated to version 0.1.6
+ * plugin-toolkit: updated to version 1.1
+
 
 = Version 1.0 =
 
- * implemented the forthcoming `plugin-toolkit` to speed up plugin development
- * bundled lessphp 0.1.5
  * implemented API to let you control the plugin the way you want
  * just in time compilation with static file caching
+ * lessphp: bundled to version 0.1.6
+ * plugin-toolkit: bundled experimental plugin development
 
 
 == Frequently Asked Questions ==

@@ -16,6 +16,8 @@
  * 
  * And to apply automatic building on page display:
  * `add_action('wp_print_styles', array($WPLessPlugin, 'processStylesheets'));`
+ * Or apply all hooks with:
+ * `$WPLessPlugin->registerHooks();`
  * 
  * You can rebuild all stylesheets at any time with:
  * `$WPLessPlugin->processStylesheets();`

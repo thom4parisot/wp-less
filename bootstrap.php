@@ -14,12 +14,4 @@ Plugin URI: http://wordpress.org/extend/plugins/wp-less/
 require dirname(__FILE__).'/lib/Plugin.class.php';
 $WPLessPlugin = WPPluginToolkitPlugin::create('WPLess', __FILE__);
 
-if (!is_admin())
-{
-  do_action('wp-less_init', $WPLessPlugin);
-  add_action('wp_print_styles', array($WPLessPlugin, 'processStylesheets'));
-}
-else
-{
-  do_action('wp-less_init_admin', $WPLessPlugin);
-}
+$WPLessPlugin->registerHooks();
