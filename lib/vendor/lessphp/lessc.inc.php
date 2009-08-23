@@ -2,7 +2,7 @@
 
 /**
  * less.inc.php
- * v0.1.5
+ * v0.1.6
  *
  * less css compiler 
  * adapted from http://lesscss.org/docs.html
@@ -182,8 +182,14 @@ class lessc
 			$this->pop();
 
 			// make the block(s) available in the new current scope
-			foreach ($ctags as $t)
-				$this->set($t, $env);
+			foreach ($ctags as $t) {
+				// if the block already exists then merge 
+				if ($this->get($t, array(end($this->env)))) {
+					$this->merge($t, $env);
+				} else {
+					$this->set($t, $env);
+				}
+			}
 
 			return isset($out) ? $out : true;
 		} catch (exception $ex) {
@@ -283,12 +289,12 @@ class lessc
 
 				// copy everything except metadata
 				if (!preg_match('/^__/', $name)) {
-					// don't overwrite previous value
-					if ($this->get($name)) {
+					// don't overwrite previous value, look in current env for name
+					if ($this->get($name, array(end($this->env)))) {
 						while ($tval = array_shift($value))
 							$this->append($name, $tval);
 					} else 
-						$this->set($name, $value); // fixme: this should be append?
+						$this->set($name, $value); 
 				}
 			}
 
@@ -356,7 +362,7 @@ class lessc
 			$this->literal(';');
 		} catch (exception $ex) { 
 			// there is an end of block next, then no problem
-			if ($this->buffer{$this->count} != '}')
+			if (strlen($this->buffer) <= $this->count || $this->buffer{$this->count} != '}')
 				throw new exception('parse error: failed to find end');
 		}
 
@@ -449,8 +455,7 @@ class lessc
 	private function literal($what)
 	{
 		// if $what is one char we can speed things up
-		// fixme: throws a notice here when going over the len of the buffer
-		if ((strlen($what) == 1 && $what != $this->buffer{$this->count}) ||
+		if ((strlen($what) == 1 && $this->count < strlen($this->buffer) && $what != $this->buffer{$this->count}) ||
 			!$this->match($this->preg_quote($what), $m)) 
 		{
 			throw new 
@@ -784,8 +789,6 @@ class lessc
 		return implode("\n", $props);
 	}
 
-
-	// todo replace render color
 	private function compileValue($value)
 	{
 		switch ($value[0]) {
@@ -995,7 +998,6 @@ class lessc
 	// get the most recent value of a variable
 	// return default if it isn't found
 	// $skip is number of vars to skip
-	// todo: rename to getVar ?
 	private function getVal($name, $skip = 0, $default = array('keyword', ''))
 	{
 		$val = $this->get($name);
@@ -1019,6 +1021,21 @@ class lessc
 		}
 
 		return end($val);
+	}
+
+	// merge a block into the current env
+	private function merge($name, $value)
+	{
+		// if the current block isn't there then just set
+		$top =& $this->env[count($this->env) - 1];
+		if (!isset($top[$name])) return $this->set($name, $value);
+
+		// copy the block into the old one, including meta data
+		foreach ($value as $k=>$v) {
+			// todo: merge property values instead of replacing
+			// have to check type for this
+			$top[$name][$k] = $v;
+		}
 	}
 
 	// set something in the current env
