@@ -232,7 +232,7 @@ abstract class WPPluginToolkitConfiguration
 
       if (!$url = get_option( 'upload_url_path'))
       {
-        $url = empty($upload_path) or ($upload_path == $dir)
+        $url = (empty($upload_path) or ($upload_path == $dir))
                 ? WP_CONTENT_URL . '/uploads'
                 : trailingslashit($siteurl).$upload_path;
       }
