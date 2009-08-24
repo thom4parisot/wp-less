@@ -74,14 +74,14 @@ class WPLessPlugin extends WPPluginToolkitPlugin
   public function processStylesheet($handle, $force = false)
   {
     $wp_styles = $this->getStyles();
-    $stylesheet = new WPLessStylesheet($wp_styles->registered[$style_id]);
+    $stylesheet = new WPLessStylesheet($wp_styles->registered[$handle]);
 
     if ($force || $stylesheet->hasToCompile())
     {
       $stylesheet->save();
     }
 
-    $wp_styles->registered[$style_id]->src = $stylesheet->getTargetUri();
+    $wp_styles->registered[$handle]->src = $stylesheet->getTargetUri();
 
     return $stylesheet;
   }
