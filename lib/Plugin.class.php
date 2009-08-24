@@ -98,20 +98,20 @@ class WPLessPlugin extends WPPluginToolkitPlugin
   {
     $styles =     $this->getQueuedStylesToProcess();
     $wp_styles =  $this->getStyles();
-    $upload_dir = $this->configuration->getUploadDir();
+
+    WPLessStylesheet::$upload_dir = $this->configuration->getUploadDir();
+    WPLessStylesheet::$upload_uri = $this->configuration->getUploadUrl();
 
     if (empty($styles))
     {
       return;
     }
 
-    if (!wp_mkdir_p($upload_dir))
+    if (!wp_mkdir_p(WPLessStylesheet::$upload_dir))
     {
-      throw new WPLessException(sprintf('The upload dir folder (`%s`) is not writable from %s.', $upload_dir, get_class($this)));
+      throw new WPLessException(sprintf('The upload dir folder (`%s`) is not writable from %s.', WPLessStylesheet::$upload_dir, get_class($this)));
     }
 
-    WPLessStylesheet::$upload_dir = $this->configuration->getUploadDir();
-    WPLessStylesheet::$upload_uri = $this->configuration->getUploadUrl();
 
     foreach ($styles as $style_id)
     {
