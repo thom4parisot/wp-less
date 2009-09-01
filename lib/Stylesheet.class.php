@@ -181,7 +181,7 @@ class WPLessStylesheet
    * 
    * @author oncletom
    * @since 1.0
-   * @version 1.0
+   * @version 1.1
    * @throws Exception in case of parsing went bad
    */
   public function save()
@@ -191,7 +191,9 @@ class WPLessStylesheet
     try
     {
       do_action('wp-less_stylesheet_save_pre', $this);
-      lessc::ccompile($this->getSourcePath(), $this->getTargetPath());
+      $compiler = new WPLessCompiler($this->getSourcePath());
+      $output = apply_filters('wp-less_stylesheet_parse', $this, $compiler->parse());
+      file_put_contents($this->getTargetPath(), $output);
       chmod($this->getTargetPath(), 0666);
       do_action('wp-less_stylesheet_save_post', $this);
     }

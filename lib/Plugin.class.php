@@ -23,6 +23,26 @@ class WPLessPlugin extends WPPluginToolkitPlugin
   public static $match_pattern = '/\.less$/U';
 
   /**
+   * Correct Stylesheet URI
+   * 
+   * It enables the cache without loosing reference to URI
+   * 
+   * @author oncletom
+   * @since 1.2
+   * @version 1.0
+   * @param string $css parsed CSS
+   * @return string parsed and fixed CSS
+   */
+  public function filterStylesheetUri(WPLessStylesheet $stylesheet, $css)
+  {
+    $token = '@'.uniqid('wpless', true).'@';
+    $css = preg_replace('#(url\s*\([\'"])([^/]+)#siU', '\1'.$token.'\2', $css);
+    $css = str_replace($token, dirname($stylesheet->getSourceUri()).'/', $css);
+
+    return $css;
+  }
+
+  /**
    * Find any style to process
    * 
    * @author oncletom
@@ -126,7 +146,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
    * 
    * @author oncletom
    * @since 1.1
-   * @version 1.0
+   * @version 1.1
    */
   public function registerHooks()
   {
@@ -139,6 +159,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     {
       do_action('wp-less_init', $this);
       add_action('wp_print_styles', array($this, 'processStylesheets'));
+      add_filter('wp-less_stylesheet_parse', array($this, 'filterStylesheetUri'), 10, 2);
     }
     else
     {
