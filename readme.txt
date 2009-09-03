@@ -47,7 +47,15 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
  1. Activate it through your WordPress plugins administration page
 
 == Changelog ==
+= Version 1.2 =
+
+ * added 2 new filters working on freshly transformed CSS
+ * added a HTML helper to LESSify directly from templates, without queuying with `wp_enqueue_stylesheet` (can't really recommend this usage)
+ * documented plugin hooks and filters
+ * hooked a filter to update relative paths to deal `uri` and cached file location
+
 = Version 1.1 =
+
  * added `bootstrap-for-theme.php` to let themers bundle the plugin in their own themes
  * added `WPLessPlugin::registerHooks` methods to ease hooks activation
  * theme bootstrap will only load if the plugin is not alread activated
