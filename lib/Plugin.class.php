@@ -31,9 +31,10 @@ class WPLessPlugin extends WPPluginToolkitPlugin
    * @since 1.2
    * @version 1.0
    * @param string $css parsed CSS
+   * @param WPLessStylesheet Stylesheet currently processed
    * @return string parsed and fixed CSS
    */
-  public function filterStylesheetUri(WPLessStylesheet $stylesheet, $css)
+  public function filterStylesheetUri($css, WPLessStylesheet $stylesheet)
   {
     $token = '@'.uniqid('wpless', true).'@';
     $css = preg_replace('#(url\s*\([\'"])([^/]+)#siU', '\1'.$token.'\2', $css);

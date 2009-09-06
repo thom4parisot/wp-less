@@ -192,9 +192,11 @@ class WPLessStylesheet
     {
       do_action('wp-less_stylesheet_save_pre', $this);
       $compiler = new WPLessCompiler($this->getSourcePath());
-      $output = apply_filters('wp-less_stylesheet_parse', $this, $compiler->parse());
+
+      $output = apply_filters('wp-less_stylesheet_parse', $compiler->parse(), $this);
       file_put_contents($this->getTargetPath(), $output);
       chmod($this->getTargetPath(), 0666);
+
       do_action('wp-less_stylesheet_save_post', $this);
     }
     catch(Exception $e)
