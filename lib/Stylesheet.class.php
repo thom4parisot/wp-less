@@ -13,9 +13,11 @@ class WPLessStylesheet
   protected $compiler,
             $stylesheet;
 
-  protected $source_path,
+  protected $is_new = true,
+            $source_path,
             $source_uri,
             $target_path,
+            $target_timestamp,
             $target_uri;
 
   public static $upload_dir,
@@ -40,6 +42,8 @@ class WPLessStylesheet
     }
 
     $this->configurePath();
+    $this->configureVersion();
+
     do_action('wp-less_stylesheet_construct', $this);
   }
 
@@ -78,6 +82,38 @@ class WPLessStylesheet
     $this->source_uri =     $this->stylesheet->src;
     $this->target_path =    self::$upload_dir.$target_file;
     $this->target_uri =     self::$upload_uri.$target_file;
+  }
+
+  /**
+   * Configures version and timestamp
+   * 
+   * It can be run only after paths have been configured. Otherwise (or if the calculation went wrong),
+   * an exception will be thrown.
+   * 
+   * @author oncletom
+   * @since 1.2
+   * @version 1.0
+   * @throws WPLessException
+   */
+  public function configureVersion()
+  {
+    if (!$this->getTargetPath())
+    {
+      throw new WPLessException("Can't configure any version if there is no target path.");
+    }
+
+    if (file_exists($this->getTargetPath()))
+    {
+      $this->is_new = false;
+      $this->target_timestamp = filemtime($this->getTargetPath());
+    }
+    else
+    {
+      $this->is_new = true;
+      $this->target_timestamp = time();
+    }
+
+    $this->stylesheet->ver = $this->target_timestamp;
   }
 
   /**
@@ -173,7 +209,7 @@ class WPLessStylesheet
    */
   public function hasToCompile()
   {
-    return !file_exists($this->getTargetPath()) || filemtime($this->getSourcePath()) > filemtime($this->getTargetPath());
+    return $this->is_new || filemtime($this->getSourcePath()) > $this->target_timestamp;
   }
 
   /**
@@ -197,6 +233,7 @@ class WPLessStylesheet
       file_put_contents($this->getTargetPath(), $output);
       chmod($this->getTargetPath(), 0666);
 
+      $this->is_new = false;
       do_action('wp-less_stylesheet_save_post', $this);
     }
     catch(Exception $e)

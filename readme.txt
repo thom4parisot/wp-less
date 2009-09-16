@@ -51,6 +51,7 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 
  * added 2 new filters working on freshly transformed CSS
  * added a HTML helper to LESSify directly from templates, without queuying with `wp_enqueue_stylesheet` (can't really recommend this usage)
+ * added timestamp calculation so as you can be HTTP cache-control compliant
  * documented plugin hooks and filters
  * hooked a filter to update relative paths to deal `uri` and cached file location
 
