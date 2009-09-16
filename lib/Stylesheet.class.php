@@ -191,12 +191,14 @@ class WPLessStylesheet
    * 
    * @author oncletom
    * @since 1.0
-   * @version 1.0
+   * @version 1.1
+   * @param boolean $append_version
+   * @param string  $version_prefix
    * @return string
    */
-  public function getTargetUri()
+  public function getTargetUri($append_version = false, $version_prefix = '?ver=')
   {
-    return $this->target_uri;
+    return $this->target_uri.(!!$append_version ? $version_prefix.$this->target_timestamp : '');
   }
 
   /**

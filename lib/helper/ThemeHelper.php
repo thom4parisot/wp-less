@@ -15,9 +15,10 @@
  * @version 1.0
  * @param string $stylesheet_uri
  * @param string $cache_key
+ * @param string $version_prefix
  * @return string processed URI
  */
-function wp_lessify($stylesheet_uri, $cache_key = null)
+function wp_lessify($stylesheet_uri, $cache_key = null, $version_prefix = '?ver=')
 {
   static $wp_less_uri_cache;
   $cache_key = 'wp-less-'.($cache_key === '' ? md5($stylesheet_uri) : $cache_key);
@@ -39,7 +40,7 @@ function wp_lessify($stylesheet_uri, $cache_key = null)
   wp_register_style($cache_key, $stylesheet_uri);
   $stylesheet = WPLessPlugin::getInstance()->processStylesheet($cache_key);
   wp_deregister_style($cache_key);
-  $wp_less_uri_cache[$cache_key] = $stylesheet->getTargetUri();
+  $wp_less_uri_cache[$cache_key] = $stylesheet->getTargetUri(true, $version_prefix);
 
   unset($stylesheet);
   return $wp_less_uri_cache[$cache_key];
