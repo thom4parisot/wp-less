@@ -10,7 +10,7 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
   /**
    * Refers to the version of the plugin
    */
-  const VERSION =   '1.2-dev';
+  const VERSION =   '1.2';
 
 
   protected function configure()
@@ -20,6 +20,6 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
 
   protected function configureOptions()
   {
-    
+
   }
 }
