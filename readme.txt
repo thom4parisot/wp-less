@@ -47,6 +47,10 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
  1. Activate it through your WordPress plugins administration page
 
 == Changelog ==
+= Version 1.2.1 =
+
+ * fixed the case where no stylesheet is queued (no warning anymore)
+
 = Version 1.2 =
 
  * added 2 new filters working on freshly transformed CSS

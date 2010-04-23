@@ -56,7 +56,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     $wp_styles =  $this->getStyles();
     $to_process = array();
 
-    foreach ($wp_styles->queue as $style_id)
+    foreach ((array)$wp_styles->queue as $style_id)
     {
       if (preg_match(self::$match_pattern, $wp_styles->registered[$style_id]->src))
       {
