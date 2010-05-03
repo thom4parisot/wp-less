@@ -1,7 +1,7 @@
 <?php
 /**
  * Base plugin class to extend
- * 
+ *
  * @version 1.1
  * @author oncletom
  * @package plugin-toolkit
@@ -14,8 +14,19 @@ abstract class WPPluginToolkitPlugin
   protected static $instances = array();
 
   /**
+   * Dispatches the plugin hooks, filters etc.
+   *
+   * This is basically the first thing done when the class is created.
+   *
+   * @author oncletom
+   * @since 1.0
+   * @abstract
+   */
+  abstract public function dispatch();
+
+  /**
    * Plugin constructor
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -30,12 +41,13 @@ abstract class WPPluginToolkitPlugin
       spl_autoload_register(array($this, 'configureAutoload'));
     }
 
-    do_action($this->configuration->getUnixName().'_plugin_construct', $this);
+    load_plugin_textdomain($configuration->getUnixName(), $configuration->getI18nPath(), $configuration->getI18nFromPluginPath());
+    do_action($configuration->getUnixName().'_plugin_construct', $this);
   }
 
   /**
    * Autoloads classes for this plugin
-   * 
+   *
    * @author oncletom
    * @return boolean
    * @param string $className
@@ -64,7 +76,7 @@ abstract class WPPluginToolkitPlugin
 
   /**
    * WordPress plugin builder
-   * 
+   *
    * @author oncletom
    * @static
    * @final
@@ -99,7 +111,7 @@ abstract class WPPluginToolkitPlugin
 
   /**
    * Returns the current configuration
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -113,7 +125,7 @@ abstract class WPPluginToolkitPlugin
   /**
    * Retrieves the instance of an object
    * If no identifier is given, the first created instance is returned
-   * 
+   *
    * @author oncletom
    * @since 1.1
    * @version 1.0
@@ -134,7 +146,7 @@ abstract class WPPluginToolkitPlugin
   /**
    * Stores an instance of a created object
    * Self storage is so good :)
-   * 
+   *
    * @author oncletom
    * @since 1.1
    * @version 1.0

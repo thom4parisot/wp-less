@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Base class for plugin configuration
+ * 
+ * @author oncletom
+ * @version 1.1
+ */
 abstract class WPPluginToolkitConfiguration
 {
   const UNIX_NAME = null;
@@ -17,12 +22,13 @@ abstract class WPPluginToolkitConfiguration
             $i18n_path_from_plugins,
             $options,
             $plugin_path,
+            $plugin_uri,
             $unix_name;
 
   /**
    * Launch the configure process
    * It is generally totally specific to each plugin.
-   * 
+   *
    * @author oncletom
    * @protected
    */
@@ -34,7 +40,7 @@ abstract class WPPluginToolkitConfiguration
 
   /**
    * Let the plugin configure its own options
-   * 
+   *
    * @author oncletom
    * @abstract
    * @protected
@@ -43,7 +49,7 @@ abstract class WPPluginToolkitConfiguration
 
   /**
    * Base constructor for a plugin configuration
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -71,7 +77,7 @@ abstract class WPPluginToolkitConfiguration
 
   /**
    * Returns resolved plugin full path location
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -84,7 +90,7 @@ abstract class WPPluginToolkitConfiguration
 
   /**
    * Returns resolved plugin full path filename
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -96,8 +102,34 @@ abstract class WPPluginToolkitConfiguration
   }
 
   /**
+   * Returns i18n path from WordPress root directory
+   *
+   * @author oncletom
+   * @since 1.0
+   * @version 1.0
+   * @return String
+   */
+  public function getI18nPath()
+  {
+    return $this->i18n_path;
+  }
+
+  /**
+   * Returns i18n path from plugin directory
+   *
+   * @author oncletom
+   * @since 1.0
+   * @version 1.0
+   * @return String
+   */
+  public function getI18nFromPluginPath()
+  {
+    return $this->i18n_path_from_plugins;
+  }
+
+  /**
    * Returns plugin prefix for classes
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -110,10 +142,10 @@ abstract class WPPluginToolkitConfiguration
 
   /**
    * Returns resolved plugin path location, from plugin path
-   * 
+   *
    * In theory, it's the same as Unix path but in fact, if the plugin is renamed it can helps
    * Not very used yet, though.
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -122,11 +154,16 @@ abstract class WPPluginToolkitConfiguration
   public function getPluginPath()
   {
     return $this->plugin_path;
-  }  
+  }
+
+  public function getPluginUri()
+  {
+    return $this->plugin_uri;
+  }
 
   /**
    * Returns unix name of the plugin
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -139,7 +176,7 @@ abstract class WPPluginToolkitConfiguration
 
   /**
    * Returns the upload dir for this configuration class (common to all instances)
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -152,7 +189,7 @@ abstract class WPPluginToolkitConfiguration
 
   /**
    * Returns the upload URL for this configuration class (common to all instances)
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -165,7 +202,7 @@ abstract class WPPluginToolkitConfiguration
 
   /**
    * Build paths for various access
-   * 
+   *
    * @author oncletom
    * @protected
    * @since 1.0
@@ -196,17 +233,31 @@ abstract class WPPluginToolkitConfiguration
 
     $this->dirname =      dirname($this->filename);
     $this->plugin_path =  preg_replace('#(.+)([^/]+/[^/]+)$#sU', "$2", $this->filename);
+    $this->plugin_uri =   WP_PLUGIN_URL.'/'.dirname($this->plugin_path);
     do_action($this->unix_name.'_configuration_setup_path', $this);
   }
 
   /**
+   * Defines an upload directory
+   * 
+   * @author  oncletom
+   * @version 1.0
+   * @since   1.1
+   * @param   String $upload_uri
+   */
+  public static function setUploadDir($upload_dir)
+  {
+    return self::$upload_dir = $upload_dir;
+  }
+  
+  /**
    * Resolves global upload path as WP does not provide any clean and independant solution for that
-   * 
+   *
    * It's barely based on the logic of `wp_upload_dir` function.
-   * 
+   *
    * @author oncletom
    * @since 1.0
-   * @version 1.0
+   * @version 1.1
    * @return boolean
    */
   protected function setupPathGlobal()
@@ -237,7 +288,7 @@ abstract class WPPluginToolkitConfiguration
                 : trailingslashit($siteurl).$upload_path;
       }
     }
-    
+
     $uploads = apply_filters('upload_dir', array(
       'path' =>     $dir,
       'url' =>      $url,
@@ -247,9 +298,22 @@ abstract class WPPluginToolkitConfiguration
       'error' =>    false,
     ));
 
-    self::$upload_dir = $uploads['basedir'];
-    self::$upload_url = $uploads['baseurl'];
+    self::setUploadDir($uploads['basedir']);
+    self::setUploadUri($uploads['baseurl']);
 
     return $uploads['error'] ? false : true;
+  }
+  
+  /**
+   * Defines an upload URI
+   * 
+   * @author  oncletom
+   * @version 1.0
+   * @since   1.1
+   * @param   String $upload_uri
+   */
+  public static function setUploadUri($upload_uri)
+  {
+    return self::$upload_uri = $upload_uri;
   }
 }
