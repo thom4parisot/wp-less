@@ -299,21 +299,21 @@ abstract class WPPluginToolkitConfiguration
     ));
 
     self::setUploadDir($uploads['basedir']);
-    self::setUploadUri($uploads['baseurl']);
+    self::setUploadUrl($uploads['baseurl']);
 
     return $uploads['error'] ? false : true;
   }
   
   /**
-   * Defines an upload URI
+   * Defines an upload URL
    * 
    * @author  oncletom
    * @version 1.0
    * @since   1.1
-   * @param   String $upload_uri
+   * @param   String $upload_url
    */
-  public static function setUploadUri($upload_uri)
+  public static function setUploadUrl($upload_url)
   {
-    return self::$upload_uri = $upload_uri;
+    return self::$upload_url = $upload_url;
   }
 }

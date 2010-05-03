@@ -3,7 +3,7 @@
  * Base plugin class to extend
  *
  * @version 1.1
- * @author oncletom
+ * @author  oncletom
  * @package plugin-toolkit
  */
 abstract class WPPluginToolkitPlugin
