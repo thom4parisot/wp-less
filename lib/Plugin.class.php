@@ -1,5 +1,5 @@
 <?php
-if (!class_exists('BasePlugin'))
+if (!class_exists('WPPluginToolkitPlugin'))
 {
   require dirname(__FILE__).'/vendor/plugin-toolkit/BasePlugin.class.php';
 }
