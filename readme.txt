@@ -47,9 +47,10 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
  1. Activate it through your WordPress plugins administration page
 
 == Changelog ==
-= Version 1.2.2 =
+= Version 1.3 =
 
  * upgraded `plugin-toolkit`
+ * usage of `$WPLessPlugin->dispatch` instead of `$WPLessPlugin->registerHooks` to match the new `plugin-toolkit` signature
 
 = Version 1.2.1 =
 

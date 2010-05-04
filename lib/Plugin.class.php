@@ -23,6 +23,17 @@ class WPLessPlugin extends WPPluginToolkitPlugin
   public static $match_pattern = '/\.less$/U';
 
   /**
+   * Dispatches all events of the plugin
+   * 
+   * @author  oncletom
+   * @since   1.3
+   */
+  public function dispatch()
+  {
+    $this->registerHooks();
+  }
+  
+  /**
    * Correct Stylesheet URI
    * 
    * It enables the cache without loosing reference to URI
@@ -145,11 +156,12 @@ class WPLessPlugin extends WPPluginToolkitPlugin
   /**
    * Method to register hooks (and do it only once)
    * 
+   * @protected
    * @author oncletom
    * @since 1.1
    * @version 1.1
    */
-  public function registerHooks()
+  protected function registerHooks()
   {
     if ($this->is_hooks_registered)
     {
