@@ -2,7 +2,7 @@
 /**
  * Base plugin class to extend
  *
- * @version 1.1
+ * @version 1.2
  * @author  oncletom
  * @package plugin-toolkit
  */
@@ -81,7 +81,7 @@ abstract class WPPluginToolkitPlugin
    * @static
    * @final
    * @since 1.0
-   * @version 1.0
+   * @version 1.1
    * @param string $baseClassName
    * @param string $baseFileName
    * @param string $singleton_identifier[optional]
@@ -89,7 +89,11 @@ abstract class WPPluginToolkitPlugin
    */
   public final static function create($baseClassName, $baseFileName, $singleton_identifier = null)
   {
-    require_once dirname(__FILE__).'/BaseConfiguration.class.php';
+    if (!class_exists('WPPluginToolkitConfiguration'))
+    {
+      require_once dirname(__FILE__).'/BaseConfiguration.class.php';
+    }
+
     require_once dirname($baseFileName).'/lib/Configuration.class.php';
 
     $class =          $baseClassName.'Plugin';
