@@ -67,7 +67,7 @@ abstract class WPPluginToolkitConfiguration
     }
 
     $this->base_class_name =  $baseClassName;
-    $this->setupPath($baseFileName, constant($unix_name_pattern));
+    $this->setupPath($baseFileName, $this->unix_name);
     $this->setupPathGlobal();
     //$this->options = new $baseClassName.'OptionCollection';
 
