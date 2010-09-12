@@ -51,6 +51,7 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 
  * upgraded `plugin-toolkit`
  * usage of `$WPLessPlugin->dispatch` instead of `$WPLessPlugin->registerHooks` to match the new `plugin-toolkit` signature
+ * no more configuration collision if usage of multiple plugins using `plugin-toolkit`
 
 = Version 1.2.1 =
 
