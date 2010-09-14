@@ -10,8 +10,8 @@ abstract class WPPluginToolkitConfiguration
   const UNIX_NAME = null;
   const I18N_DIR =  'i18n';
 
-  protected static  $upload_dir,
-                    $upload_url;
+  protected $upload_dir,
+            $upload_url;
 
   protected $base_class_name,
             $base_dirname,
@@ -184,7 +184,7 @@ abstract class WPPluginToolkitConfiguration
    */
   public function getUploadDir()
   {
-    return self::$upload_dir;
+    return $this->upload_dir;
   }
 
   /**
@@ -197,7 +197,7 @@ abstract class WPPluginToolkitConfiguration
    */
   public function getUploadUrl()
   {
-    return self::$upload_url;
+    return $this->upload_url;
   }
 
   /**
