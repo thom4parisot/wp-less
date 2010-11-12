@@ -1,0 +1,51 @@
+
+@rounded-corners {
+	border-radius: 10px;
+}
+
+.bold {
+	@font-size: 20px;
+	font-size: @font-size;
+	font-weight: bold;
+}
+
+body #window {
+	@rounded-corners;
+	.bold;
+	line-height: @font-size * 1.5;
+}
+
+#bundle {
+  .button {
+    display: block;
+    border: 1px solid black;
+    background-color: grey;
+    :hover { background-color: white }
+  }
+}
+#header a {
+  color: orange;
+  #bundle > .button; // mixin the button class
+}
+
+div {
+	@abstract {
+		hello: world;
+		b {
+			color: blue;
+		}
+	}
+
+	@abstract > b;
+	@abstract;
+}
+
+@poop {
+	big: baby;
+}
+
+body {
+	div;
+}
+
+

@@ -1,0 +1,64 @@
+@a: 2;
+@x: @a * @a;
+@y: @x + 1;
+@z: @y + @x * 2;
+@m: @z % @y;
+ 
+@nice-blue: #5B83AD;
+@light-blue: @nice-blue + #111;
+
+@rgb-color: rgb(20%, 15%, 80%);
+@rgba-color: rgba(23,68,149,0.5);
+ 
+@b: @a * 10px;
+@c: #888;
+@fonts: "Trebuchet MS", Verdana, sans-serif;
+ 
+.variables {
+  width: @z + 1cm; // 14cm
+  height: @b + @x + 0px; // 24px
+  margin-top: -@b; // -20px
+  margin-bottom: 10 - -@b; // 30px
+  @c: @c + #001;
+  color: @c;
+  background: @light-blue;
+  font-family: @fonts;
+  margin: @m + 0px; // 3px
+  font-size: 10px/12px;
+  font-size: 120%/120%;
+}
+
+.external {
+  color: @c;
+  border: 1px solid @rgb-color;
+  background: @rgba-color;
+  padding: @nonexistant + 4px;
+}
+
+// some math tests & considerations
+division: 10px / 2;
+division: 10px/ 2;
+//division: 10px /2; // doesn't work, probably should support this
+
+// consideratins for subtraction:
+// something-something is a single keyword
+// @something-@something should be subtraction? eg.
+@test-: 10;
+@west: "hello";
+subtract: @test-@west; // this will compile but the output will be: 10 "hello"
+
+subtract: 2-2; // this will give you: 2 -2, similar to above
+
+// addition: 5+5; // doesn't work
+// addition: 5 +5; // doesn't work, similar to broken division above
+addition: 5+ 5;
+addition: 5 + 5;
+
+
+// conclusion:
+// probably best to enforce space around both sides of every operator
+// (except when touching a paren)
+math: (5 + 5)*(2 / 1); // this already works
+
+
+
