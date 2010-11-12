@@ -6,7 +6,7 @@ if (!class_exists('WPPluginToolkitPlugin'))
 
 /**
  * WP LESS Plugin class
- * 
+ *
  * @author oncletom
  * @package wp-less
  * @subpackage lib
@@ -24,7 +24,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 
   /**
    * Dispatches all events of the plugin
-   * 
+   *
    * @author  oncletom
    * @since   1.3
    */
@@ -32,12 +32,12 @@ class WPLessPlugin extends WPPluginToolkitPlugin
   {
     $this->registerHooks();
   }
-  
+
   /**
    * Correct Stylesheet URI
-   * 
+   *
    * It enables the cache without loosing reference to URI
-   * 
+   *
    * @author oncletom
    * @since 1.2
    * @version 1.0
@@ -56,7 +56,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 
   /**
    * Find any style to process
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -80,7 +80,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 
   /**
    * Returns WordPress Styles manager
-   * 
+   *
    * @author oncletom
    * @uses WP_Styles
    * @since 1.0
@@ -95,7 +95,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 
   /**
    * Process a single stylesheet
-   * 
+   *
    * @author oncletom
    * @since 1.1
    * @version 1.1
@@ -120,7 +120,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 
   /**
    * Process all stylesheets to compile just in time
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.1
@@ -130,7 +130,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
   {
     $styles =     $this->getQueuedStylesToProcess();
     $wp_styles =  $this->getStyles();
-
+    
     WPLessStylesheet::$upload_dir = $this->configuration->getUploadDir();
     WPLessStylesheet::$upload_uri = $this->configuration->getUploadUrl();
 
@@ -155,7 +155,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 
   /**
    * Method to register hooks (and do it only once)
-   * 
+   *
    * @protected
    * @author oncletom
    * @since 1.1
@@ -171,7 +171,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     if (!is_admin())
     {
       do_action('wp-less_init', $this);
-      add_action('wp_print_styles', array($this, 'processStylesheets'));
+      add_action('wp', array($this, 'processStylesheets'), 999);
       add_filter('wp-less_stylesheet_parse', array($this, 'filterStylesheetUri'), 10, 2);
     }
     else

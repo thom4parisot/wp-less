@@ -3,7 +3,7 @@ require dirname(__FILE__).'/vendor/lessphp/lessc.inc.php';
 
 /**
  * Stylesheet management
- * 
+ *
  * @author oncletom
  * @package wp-less
  * @subpackage lib
@@ -25,7 +25,7 @@ class WPLessStylesheet
 
   /**
    * Constructs the object, paths and all
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -49,7 +49,7 @@ class WPLessStylesheet
 
   /**
    * Returns the computed path for a given dependency
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -68,7 +68,7 @@ class WPLessStylesheet
   /**
    * Configure paths for the stylesheet
    * Since this moment, everything is configured to be usable
-   * 
+   *
    * @protected
    * @author oncletom
    * @since 1.0
@@ -86,10 +86,10 @@ class WPLessStylesheet
 
   /**
    * Configures version and timestamp
-   * 
+   *
    * It can be run only after paths have been configured. Otherwise (or if the calculation went wrong),
    * an exception will be thrown.
-   * 
+   *
    * @author oncletom
    * @since 1.2
    * @version 1.0
@@ -118,7 +118,7 @@ class WPLessStylesheet
 
   /**
    * Returns source content (CSS to parse)
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -131,7 +131,7 @@ class WPLessStylesheet
 
   /**
    * Returns source path
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -144,7 +144,7 @@ class WPLessStylesheet
 
   /**
    * Returns source URI
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -157,7 +157,7 @@ class WPLessStylesheet
 
   /**
    * Returns parsed CSS
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -175,7 +175,7 @@ class WPLessStylesheet
 
   /**
    * Returns target path
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -188,7 +188,7 @@ class WPLessStylesheet
 
   /**
    * Returns target URI
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.1
@@ -203,7 +203,7 @@ class WPLessStylesheet
 
   /**
    * Tells if compilation is needed
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.0
@@ -216,7 +216,7 @@ class WPLessStylesheet
 
   /**
    * Save the current stylesheet as a parsed css file
-   * 
+   *
    * @author oncletom
    * @since 1.0
    * @version 1.1

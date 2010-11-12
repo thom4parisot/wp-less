@@ -49,9 +49,11 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 == Changelog ==
 = Version 1.3 =
 
+ * moved stylesheet processing from `wp_print_styles` to `wp` action
  * upgraded `plugin-toolkit`
  * usage of `$WPLessPlugin->dispatch` instead of `$WPLessPlugin->registerHooks` to match the new `plugin-toolkit` signature
  * no more configuration collision if usage of multiple plugins using `plugin-toolkit`
+ * lessphp: updated to [eac64a9d5a3bc3186a11c7130968388819f4c403](https://github.com/leafo/lessphp/commit/eac64a9d5a3bc3186a11c7130968388819f4c403) commit
 
 = Version 1.2.1 =
 
