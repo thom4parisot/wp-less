@@ -257,7 +257,7 @@ abstract class WPPluginToolkitConfiguration
    *
    * @author oncletom
    * @since 1.0
-   * @version 1.1
+   * @version 1.2
    * @return boolean
    */
   protected function setupPathGlobal()
@@ -269,7 +269,7 @@ abstract class WPPluginToolkitConfiguration
 
     $siteurl =      get_option('siteurl');
     $upload_path =  trim(get_option('upload_path'));
-    $subdir =       '/'.$this->unix_name;
+    $subdir =       $this->unix_name;
 
     if (defined('UPLOADS'))
     {
@@ -292,7 +292,7 @@ abstract class WPPluginToolkitConfiguration
     $uploads = apply_filters('upload_dir', array(
       'path' =>     $dir,
       'url' =>      $url,
-      'subdir' =>   $subdir,
+      'subdir' =>   '/'.$subdir,
       'basedir' =>  $dir.$subdir,
       'baseurl' =>  $url.$subdir,
       'error' =>    false,
