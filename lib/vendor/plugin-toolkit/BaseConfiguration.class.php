@@ -293,8 +293,8 @@ abstract class WPPluginToolkitConfiguration
       'path' =>     $dir,
       'url' =>      $url,
       'subdir' =>   '/'.$subdir,
-      'basedir' =>  $dir.$subdir,
-      'baseurl' =>  $url.$subdir,
+      'basedir' =>  trailingslashit($dir).$subdir,
+      'baseurl' =>  trailingslashit($url).$subdir,
       'error' =>    false,
     ));
 
