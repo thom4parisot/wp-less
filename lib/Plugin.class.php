@@ -108,7 +108,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     $wp_styles = $this->getStyles();
     $stylesheet = new WPLessStylesheet($wp_styles->registered[$handle]);
 
-    if ($force || $stylesheet->hasToCompile())
+    if ((is_bool($force) && $force) || $stylesheet->hasToCompile())
     {
       $stylesheet->save();
     }
@@ -130,6 +130,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
   {
     $styles =     $this->getQueuedStylesToProcess();
     $wp_styles =  $this->getStyles();
+    $force = 			is_bool($force) && $force ? !!$force : false;
     
     WPLessStylesheet::$upload_dir = $this->configuration->getUploadDir();
     WPLessStylesheet::$upload_uri = $this->configuration->getUploadUrl();
@@ -143,7 +144,6 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     {
       throw new WPLessException(sprintf('The upload dir folder (`%s`) is not writable from %s.', WPLessStylesheet::$upload_dir, get_class($this)));
     }
-
 
     foreach ($styles as $style_id)
     {
@@ -171,7 +171,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     if (!is_admin())
     {
       do_action('wp-less_init', $this);
-      add_action('wp', array($this, 'processStylesheets'), 999);
+      add_action('wp', array($this, 'processStylesheets'), 999, 0);
       add_filter('wp-less_stylesheet_parse', array($this, 'filterStylesheetUri'), 10, 2);
     }
     else
