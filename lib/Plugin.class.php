@@ -172,7 +172,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     {
       do_action('wp-less_init', $this);
       add_action('wp', array($this, 'processStylesheets'), 999, 0);
-      add_filter('wp-less_stylesheet_parse', array($this, 'filterStylesheetUri'), 10, 2);
+      add_filter('wp-less_stylesheet_save', array($this, 'filterStylesheetUri'), 10, 2);
     }
     else
     {

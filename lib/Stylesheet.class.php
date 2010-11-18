@@ -156,24 +156,6 @@ class WPLessStylesheet
   }
 
   /**
-   * Returns parsed CSS
-   *
-   * @author oncletom
-   * @since 1.0
-   * @version 1.0
-   * @return string
-   */
-  public function getTargetContent()
-  {
-    if (!$this->compiler)
-    {
-      $this->compiler = new lessc($this->getSourcePath());
-    }
-
-    return apply_filters('wp-less_stylesheet_target_content', $this->compiler->parse());
-  }
-
-  /**
    * Returns target path
    *
    * @author oncletom
@@ -219,7 +201,7 @@ class WPLessStylesheet
    *
    * @author oncletom
    * @since 1.0
-   * @version 1.1
+   * @version 1.2
    * @throws Exception in case of parsing went bad
    */
   public function save()
@@ -231,8 +213,7 @@ class WPLessStylesheet
       do_action('wp-less_stylesheet_save_pre', $this);
       $compiler = new WPLessCompiler($this->getSourcePath());
 
-      $output = apply_filters('wp-less_stylesheet_parse', $compiler->parse(), $this);
-      file_put_contents($this->getTargetPath(), $output);
+      file_put_contents($this->getTargetPath(), apply_filters('wp-less_stylesheet_save', $compiler->parse(), $this));
       chmod($this->getTargetPath(), 0666);
 
       $this->is_new = false;

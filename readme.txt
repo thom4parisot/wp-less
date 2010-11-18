@@ -50,6 +50,9 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 = Version 1.3 =
 
  * moved stylesheet processing from `wp_print_styles` to `wp` action
+ * added new compiler actions and filters (same name each): `wp-less_compiler_construct` and `wp-less_compiler_parse`
+ * added `WPLessCompiler::getBuffer()` and `WPLessCompiler::setBuffer()` method, to enables hooking on LESS content, before being compiled into CSS
+ * removed `WPLessStyleseet::getTargetContent` method
  * upgraded `plugin-toolkit`
  * usage of `$WPLessPlugin->dispatch` instead of `$WPLessPlugin->registerHooks` to match the new `plugin-toolkit` signature
  * no more configuration collision if usage of multiple plugins using `plugin-toolkit`
