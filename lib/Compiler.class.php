@@ -7,7 +7,7 @@
  * @package wp-less
  * @subpackage lib
  * @since 1.2
- * @version 1.1
+ * @version 1.2
  */
 class WPLessCompiler extends lessc
 {
@@ -19,7 +19,7 @@ class WPLessCompiler extends lessc
 	 */
 	public function __construct($file = null)
 	{
-  	do_action('wp-less_compiler_construct', $this, $file);
+  	do_action('wp-less_compiler_construct_pre', $this, $file);
 		parent::__construct(apply_filters('wp-less_compiler_construct', $file));
 	}
 
@@ -33,7 +33,7 @@ class WPLessCompiler extends lessc
    */
   public function parse($text = null)
   {
-  	do_action('wp-less_compiler_parse', $this);
+  	do_action('wp-less_compiler_parse_pre', $this);
     return apply_filters('wp-less_compiler_parse', parent::parse($text));
   }
   
