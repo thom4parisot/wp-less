@@ -3,8 +3,8 @@ Contributors: oncletom
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=752034
 Tags: dev, theme, themes, toolkit, plugin-toolkit, less, lesscss, lessc, lessphp, productivity, style, stylesheet, api
 Requires at least: 2.8
-Tested up to: 2.8.x
-Stable tag: 1.3
+Tested up to: 3.0.2
+Stable tag: 1.3.1
 
 Implementation of LESS (Leaner CSS) in order to make themes development easier.
 
@@ -47,6 +47,13 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
  1. Activate it through your WordPress plugins administration page
 
 == Changelog ==
+
+= Version 1.3.1 =
+
+ * renamed `wp-less_compiler_parse` action to `wp-less_compiler_parse_pre` to avoid name conflicts
+ * renamed `wp-less_compiler_construct` action to `wp-less_compiler_construct_pre` to avoid name conflicts
+ * lessphp: patched the lib to let manipulating the buffer, and replace strings (do it at your own risks)
+
 = Version 1.3 =
 
  * moved stylesheet processing from `wp_print_styles` to `wp` action

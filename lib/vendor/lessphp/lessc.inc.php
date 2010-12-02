@@ -15,7 +15,7 @@
 //
 
 class lessc {
-	private $buffer;
+	protected $buffer;
 	private $count;
 	private $line;
 	private $expandStack;
