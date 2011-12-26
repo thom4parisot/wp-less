@@ -50,6 +50,10 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 
 = Version 1.4 =
 
+ * action: `wp-less_compiler_parse_pre` now takes 3 arguments: class instance, text and variable arguments
+ * action: `wp-less_stylesheet_save_pre` now takes 2 arguments: class instance and variable arguments
+ * helper: added `less_add_variable` to ease manipulations from theme, if needed (the file needs to be included manually)
+ * stylesheet: `getBuffer()` and `setBuffer` will be removed in 1.5 version
  * lessphp: removed the custom patch for buffer manipulation, due to built-in variable management
  * lessphp: updated to version 0.3.0
 

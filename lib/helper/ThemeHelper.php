@@ -1,5 +1,20 @@
 <?php
 /**
+ * Creates easily a variable to be replaced on compilation
+ * 
+ * @author oncletom
+ * @since 1.4
+ * @version 1.0
+ * @param string $name
+ * @param string $value
+ * @return null
+ */
+function less_set_variable($name, $value)
+{
+  WPPluginToolkitPlugin::getInstance('WPLess')->setVariable($name, $value);
+}
+
+/**
  * LESSify a stylesheet on the fly
  * 
  * <pre>

@@ -23,6 +23,17 @@ class WPLessPlugin extends WPPluginToolkitPlugin
   public static $match_pattern = '/\.less$/U';
 
   /**
+   * Proxy method
+   * 
+   * @see WPLessConfiguration::setVariables()
+   * @since 1.4
+   */
+  public function addVariable($name, $value)
+  {
+    $this->getConfiguration()->addVariable($name, $value);
+  }
+
+  /**
    * Dispatches all events of the plugin
    *
    * @author  oncletom
@@ -98,7 +109,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
    *
    * @author oncletom
    * @since 1.1
-   * @version 1.1
+   * @version 1.2
    * @param string $handle
    * @param $force boolean If set to true, rebuild all stylesheets, without considering they are updated or not
    * @return WPLessStylesheet
@@ -110,7 +121,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 
     if ((is_bool($force) && $force) || $stylesheet->hasToCompile())
     {
-      $stylesheet->save();
+      $stylesheet->save($this->getConfiguration()->getVariables());
     }
 
     $wp_styles->registered[$handle]->src = $stylesheet->getTargetUri();
@@ -180,5 +191,16 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     }
 
     return $this->is_hooks_registered = true;
+  }
+
+  /**
+   * Proxy method
+   * 
+   * @see WPLessConfiguration::setVariables()
+   * @since 1.4
+   */
+  public function setVariables(array $variables)
+  {
+    $this->getConfiguration()->setVariables($variables);
   }
 }

@@ -7,13 +7,14 @@
  * @package wp-less
  * @subpackage lib
  * @since 1.2
- * @version 1.2
+ * @version 1.3
  */
 class WPLessCompiler extends lessc
 {
 	/**
 	 * Instantiate a compiler
 	 * 
+   * @api 
 	 * @see	lessc::__construct
 	 * @param $file	string [optional]	Additional file to parse
 	 */
@@ -26,15 +27,17 @@ class WPLessCompiler extends lessc
   /**
    * Parse a LESS file
    * 
+   * @api
    * @see lessc::parse
    * @throws Exception
    * @param string $text [optional] Custom CSS to parse
+   * @param array $variables [optional] Variables to inject in the stylesheet
    * @return string CSS output
    */
-  public function parse($text = null)
+  public function parse($text = null, $variables = null)
   {
-  	do_action('wp-less_compiler_parse_pre', $this);
-    return apply_filters('wp-less_compiler_parse', parent::parse($text));
+  	do_action('wp-less_compiler_parse_pre', $this, $text, $variables);
+    return apply_filters('wp-less_compiler_parse', parent::parse($text, $variables));
   }
   
   /**
@@ -42,6 +45,7 @@ class WPLessCompiler extends lessc
    * 
    * @since 	1.1
    * @return 	string current buffer
+   * @deprecated
    */
   public function getBuffer()
   {
@@ -54,6 +58,7 @@ class WPLessCompiler extends lessc
    * 
    * @since		1.1
    * @param 	$css	string CSS you'd like to see in the buffer, before being parse
+   * @deprecated
    */
   public function setBuffer($css)
   {
