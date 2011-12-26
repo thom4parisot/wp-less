@@ -3,7 +3,7 @@ Contributors: oncletom
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=752034
 Tags: dev, theme, themes, toolkit, plugin-toolkit, less, lesscss, lessc, lessphp, productivity, style, stylesheet, api
 Requires at least: 2.8
-Tested up to: 3.0.2
+Tested up to: 3.3
 Stable tag: 1.3.1
 
 Implementation of LESS (Leaner CSS) in order to make themes development easier.
@@ -30,7 +30,7 @@ Seriously.
 The sole requirement is to use WordPress API and LESS convention: the `.less` extension.
 
 **Minimal Requirements**: PHP 5.1.2 and WordPress 2.8.  
-**Relies on**: [LESSPHP 0.2.0](http://leafo.net/lessphp/), [plugin-toolkit](http://wordpress.org/extend/plugins/plugin-toolkit/).
+**Relies on**: [LESSPHP 0.3.0](http://leafo.net/lessphp/), [plugin-toolkit](http://wordpress.org/extend/plugins/plugin-toolkit/).
 
 *Notice*: in case you'd like to drop the usage of this plugin, it's safe to do it. You will just need to convert back your stylesheets to CSS.
 
@@ -47,6 +47,11 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
  1. Activate it through your WordPress plugins administration page
 
 == Changelog ==
+
+= Version 1.4 =
+
+ * lessphp: removed the custom patch for buffer manipulation, due to built-in variable management
+ * lessphp: updated to version 0.3.0
 
 = Version 1.3.1 =
 
@@ -99,10 +104,10 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 == Frequently Asked Questions ==
 = How do I transform a LESS file into CSS? =
 Consider this bit of code to automatically enqueue your stylesheet from your theme (or plugin):  
-`wp_enqueue_style('mytheme', get_bloginfo('template_directory').'/style.css', array('blueprint'), '', 'screen, projection');`
+`wp_enqueue_style('mytheme', get_bloginfo('template_directory').'/style.css', array(), '', 'screen, projection');`
 
 To make it process by WP-LESS, switch to this way:  
-`wp_enqueue_style('mytheme', get_bloginfo('template_directory').'/style.less', array('blueprint'), '', 'screen, projection');`
+`wp_enqueue_style('mytheme', get_bloginfo('template_directory').'/style.less', array(), '', 'screen, projection');`
 
 You understood well: you just need to change the extension of the file.
 
