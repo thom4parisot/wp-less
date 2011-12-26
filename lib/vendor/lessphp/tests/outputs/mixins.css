@@ -1,0 +1,35 @@
+.bold {
+  font-size:20px;
+  font-weight:bold;
+}
+body #window {
+  border-radius:10px;
+  font-size:20px;
+  font-weight:bold;
+  line-height:30px;
+}
+#bundle .button {
+  display:block;
+  border:1px solid black;
+  background-color:grey;
+}
+#bundle .button:hover { background-color:white; }
+#header a {
+  color:orange;
+  display:block;
+  border:1px solid black;
+  background-color:grey;
+}
+#header a:hover { background-color:white; }
+div {
+  color:blue;
+  hello:world;
+}
+div b { color:blue; }
+body {
+  color:blue;
+  hello:world;
+}
+body b { color:blue; }
+.hello .world { color:blue; }
+.foobar { color:blue; }
