@@ -9,9 +9,9 @@
  * @param string $value
  * @return null
  */
-function less_set_variable($name, $value)
+function less_add_variable($name, $value)
 {
-  WPPluginToolkitPlugin::getInstance('WPLess')->setVariable($name, $value);
+  WPPluginToolkitPlugin::getInstance('WPLess')->addVariable($name, $value);
 }
 
 /**

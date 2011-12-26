@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: dev, theme, themes, toolkit, plugin-toolkit, less, lesscss, lessc, lessphp, productivity, style, stylesheet, api
 Requires at least: 2.8
 Tested up to: 3.3
-Stable tag: 1.3.1
+Stable tag: 1.4
 
 Implementation of LESS (Leaner CSS) in order to make themes development easier.
 
@@ -128,6 +128,28 @@ It's a very good moto. Since the 1.1 release, there is a special bootstrap file:
 Everything is prepared and documented inside, with examples and hint.
 
 Just help yourself!
+
+= I want to inject custom variables =
+LESS PHP 0.3.0 introduced a native way to set variables from PHP.
+
+If you initialized the class by yourself, do it this way:
+`$WPLessPlugin->addVariable('@default_color', '#fff');`
+
+If you don't manage the plugin by yourself:
+`WPPluginToolkitPlugin::getInstance('WPLess')->addVariable($name, $value);`
+
+And if you want to do that from a theme, with less code:
+
+1. include the `wp-less/lib/helper/ThemeHelper.php` file;
+1. call `less_add_variable('@default_color', '#fff')`
+
+== Upgrade Notice ==
+
+= 1.4 =
+
+As `lessphp` has been upgraded to `0.3.0`, its behavior changed a little bit.
+
+Please check your LESS syntax [according to the document](http://leafo.net/lessphp/docs/) before applying this update.
 
 == Screenshots ==
 
