@@ -51,7 +51,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
    *
    * @author oncletom
    * @since 1.2
-   * @version 1.0
+   * @version 1.1
    * @param string $css parsed CSS
    * @param WPLessStylesheet Stylesheet currently processed
    * @return string parsed and fixed CSS
@@ -59,8 +59,17 @@ class WPLessPlugin extends WPPluginToolkitPlugin
   public function filterStylesheetUri($css, WPLessStylesheet $stylesheet)
   {
     $token = '@'.uniqid('wpless', true).'@';
-    $css = preg_replace('#(url\s*\([\'"])([^/]+)#siU', '\1'.$token.'\2', $css);
-    $css = str_replace($token, dirname($stylesheet->getSourceUri()).'/', $css);
+    $css = preg_replace('#url\s*\(([\'"]{0,1})([^\'"\)]+)\1\)#siU', 'url(\1'.$token.'\2\1)', $css);
+
+    /*
+     * Token replacement:
+     * - preserve data URI
+     * - prefix file URI with absolute path to the theme
+     */
+    $css = str_replace(
+      array($token.'data:', $token),
+      array('data:', dirname($stylesheet->getSourceUri()).'/'),
+    $css);
 
     return $css;
   }
