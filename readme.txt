@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: dev, theme, themes, toolkit, plugin-toolkit, less, lesscss, lessc, lessphp, productivity, style, stylesheet, api
 Requires at least: 2.8
 Tested up to: 3.3
-Stable tag: 1.4
+Stable tag: 1.4.1
 
 Implementation of LESS (Leaner CSS) in order to make themes development easier.
 
@@ -47,6 +47,10 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
  1. Activate it through your WordPress plugins administration page
 
 == Changelog ==
+
+= Version 1.4.1 =
+
+ * bug: CSS `url()` are now properly resolved relative to the theme URL
 
 = Version 1.4 =
 
