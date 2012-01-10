@@ -48,6 +48,10 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 
 == Changelog ==
 
+= Version 1.4.3 =
+
+ * bug: fixed the `property of non-object in Plugin.class.php` bug
+
 = Version 1.4.2 =
 
  * feature: if `WP_DEBUG` is set to true, compilation is done on every page

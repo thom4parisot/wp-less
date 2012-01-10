@@ -93,13 +93,16 @@ class WPLessPlugin extends WPPluginToolkitPlugin
    * @author oncletom
    * @uses WP_Styles
    * @since 1.0
-   * @version 1.0
+   * @version 1.1
    * @return WP_Styles styles instance
    */
   public function getStyles()
   {
     global $wp_styles;
-    return $wp_styles;
+
+    //because if someone never registers through `wp_(enqueue|register)_stylesheet`,
+    //$wp_styles is never initialized, and thus, equals NULL
+    return null === $wp_styles || !$wp_styles instanceof WP_Styles : new WP_Styles() : $wp_styles;
   }
 
   /**
