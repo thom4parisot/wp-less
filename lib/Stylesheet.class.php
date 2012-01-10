@@ -179,6 +179,18 @@ class WPLessStylesheet
   }
 
   /**
+   * Returns stylesheet variables
+   * 
+   * @author oncletom
+   * @since 1.4.2
+   * @return array
+   */
+  public function getVariables()
+  {
+    return $this->variables;
+  }
+
+  /**
    * Tells if compilation is needed
    *
    * @author oncletom
@@ -194,29 +206,11 @@ class WPLessStylesheet
   /**
    * Save the current stylesheet as a parsed css file
    *
-   * @author oncletom
-   * @since 1.0
-   * @version 1.3
-   * @throws Exception in case of parsing went bad
+   * @deprecated
+   * @see WPLessCompiler::saveStylesheet()
    */
   public function save()
   {
-    wp_mkdir_p(dirname($this->getTargetPath()));
-
-    try
-    {
-      do_action('wp-less_stylesheet_save_pre', $this, $this->variables);
-      $compiler = new WPLessCompiler($this->getSourcePath());
-
-      file_put_contents($this->getTargetPath(), apply_filters('wp-less_stylesheet_save', $compiler->parse(null, $this->variables), $this));
-      chmod($this->getTargetPath(), 0666);
-
-      $this->is_new = false;
-      do_action('wp-less_stylesheet_save_post', $this);
-    }
-    catch(Exception $e)
-    {
-      wp_die($e->getMessage());
-    }
+    $this->is_new = false;
   }
 }

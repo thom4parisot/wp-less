@@ -23,17 +23,6 @@ class WPLessPlugin extends WPPluginToolkitPlugin
   public static $match_pattern = '/\.less$/U';
 
   /**
-   * Proxy method
-   * 
-   * @see WPLessConfiguration::setVariables()
-   * @since 1.4
-   */
-  public function addVariable($name, $value)
-  {
-    $this->getConfiguration()->addVariable($name, $value);
-  }
-
-  /**
    * Dispatches all events of the plugin
    *
    * @author  oncletom
@@ -130,7 +119,9 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 
     if ((is_bool($force) && $force) || $stylesheet->hasToCompile())
     {
-      $stylesheet->save();
+      $compiler = new WPLessCompiler($stylesheet->getSourcePath());
+      $compiler->registerFunctions($this->getConfiguration()->getFunctions());
+      $compiler->saveStylesheet($stylesheet);
     }
 
     $wp_styles->registered[$handle]->src = $stylesheet->getTargetUri();
@@ -208,8 +199,41 @@ class WPLessPlugin extends WPPluginToolkitPlugin
    * @see WPLessConfiguration::setVariables()
    * @since 1.4
    */
+  public function addVariable($name, $value)
+  {
+    $this->getConfiguration()->addVariable($name, $value);
+  }
+
+  /**
+   * Proxy method
+   * 
+   * @see WPLessConfiguration::setVariables()
+   * @since 1.4
+   */
   public function setVariables(array $variables)
   {
     $this->getConfiguration()->setVariables($variables);
+  }
+
+  /**
+   * Proxy method
+   * 
+   * @see WPLessConfiguration::registerFunction()
+   * @since 1.4.2
+   */
+  public function registerFunction($name, $callback, $scope = array())
+  {
+    $this->getConfiguration()->registerFunction($name, $callback, $scope);
+  }
+
+  /**
+   * Proxy method
+   * 
+   * @see WPLessConfiguration::unregisterFunction()
+   * @since 1.4.2
+   */
+  public function unregisterFunction($name)
+  {
+    $this->getConfiguration()->unregisterFunction($name);
   }
 }

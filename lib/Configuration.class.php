@@ -17,6 +17,12 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
    */
   protected $variables = array();
 
+  /**
+   * @protected
+   * @see http://leafo.net/lessphp/docs/index.html#custom_functions
+   */
+  protected $functions = array();
+
 
   protected function configure()
   {
@@ -57,5 +63,42 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
   public function setVariables(array $variables)
   {
     $this->variables = $variables;
+  }
+
+  /**
+   * Return LESS functions
+   * 
+   * @since 1.4.2
+   * @return array
+   */
+  public function getFunctions()
+  {
+    return $this->functions;
+  }
+
+  /**
+   * Registers a new LESS function
+   * 
+   * @param string $name
+   * @param Closure|function $callback
+   * @param array $scope CSS handles to limit callback registration to (if empty, applies to every stylesheet) – not used yet
+   * @see http://leafo.net/lessphp/docs/index.html#custom_functions
+   */
+  public function registerFunction($name, $callback, $scope = array())
+  {
+    $this->functions[$name] = array(
+      'callback' => $callback,
+      'scope' => $scope,
+    );
+  }
+
+  /**
+   * Unregisters a LESS function
+   * 
+   * @see http://leafo.net/lessphp/docs/index.html#custom_functions
+   */
+  public function unregisterFunction($name)
+  {
+    unset($this->functions[$name]);
   }
 }

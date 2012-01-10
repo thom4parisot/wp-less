@@ -15,6 +15,21 @@ function less_add_variable($name, $value)
 }
 
 /**
+ * Creates easily a LESS function to be replaced on compilation
+ * 
+ * @author oncletom
+ * @since 1.4.2
+ * @version 1.0
+ * @param string $name
+ * @param string $callback
+ * @return null
+ */
+function less_register_function($name, $callback)
+{
+  WPPluginToolkitPlugin::getInstance('WPLess')->registerFunction($name, $callback);
+}
+
+/**
  * LESSify a stylesheet on the fly
  * 
  * <pre>
@@ -55,7 +70,7 @@ function wp_lessify($stylesheet_uri, $cache_key = null, $version_prefix = '?ver=
   wp_register_style($cache_key, $stylesheet_uri);
   $stylesheet = WPLessPlugin::getInstance()->processStylesheet($cache_key);
   wp_deregister_style($cache_key);
-  $wp_less_uri_cache[$cache_key] = $stylesheet->getTargetUri(true, $version_prefix);
+  $wp_less_uri_cache[$cache_key] = $stylesheet->getTargetUri();
 
   unset($stylesheet);
   return $wp_less_uri_cache[$cache_key];

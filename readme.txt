@@ -52,6 +52,7 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 
  * feature: if `WP_DEBUG` is set to true, compilation is done on every page
  * feature: rebuild now takes care of LESS PHP variable
+ * feature: added support of [custom LESS functions](http://leafo.net/lessphp/docs/index.html#custom_functions)
  * lessphp: updated to version 0.3.1
 
 = Version 1.4.1 =
@@ -152,6 +153,22 @@ And if you want to do that from a theme, with less code:
 
 1. include the `wp-less/lib/helper/ThemeHelper.php` file;
 1. call `less_add_variable('@default_color', '#fff')`
+
+= I want to create a new custom LESS function =
+LESS PHP 0.3.1. introducted a new way to register functions without subclassing the compiler.
+
+If you initialized the class by yourself, do it this way:
+`$WPLessPlugin->registerFunction('double', 'lessphp_double');`
+
+If you don't manage the plugin by yourself:
+`WPPluginToolkitPlugin::getInstance('WPLess')->registerFunction('double', 'lessphp_double');`
+
+And if you want to do that from a theme, with less code:
+
+1. include the `wp-less/lib/helper/ThemeHelper.php` file;
+1. call `less_register_function('double', 'lessphp_double')`
+
+**Notice**: in this example, we assume `lessphp_double` is a valid [PHP callback](http://php.net/manual/en/language.pseudo-types.php#language.types.callback), as stated in `lessphp` documentation.
 
 == Upgrade Notice ==
 

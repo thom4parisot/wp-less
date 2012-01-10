@@ -39,29 +39,45 @@ class WPLessCompiler extends lessc
   	do_action('wp-less_compiler_parse_pre', $this, $text, $variables);
     return apply_filters('wp-less_compiler_parse', parent::parse($text, $variables));
   }
-  
+
   /**
-   * Returns the LESS buffer
+   * Registers a set of functions
+   * Originally stored in WPLessConfiguration instance
    * 
-   * @since 	1.1
-   * @return 	string current buffer
-   * @deprecated
+   * @param array $functions
    */
-  public function getBuffer()
+  public function registerFunctions(array $functions = array())
   {
-  	return $this->buffer;
+    foreach ($functions as $name => $args)
+    {
+      $this->registerFunction($name, $args['callback']);
+    }
   }
 
   /**
-   * Enables to overload the current LESS buffer
-   * Use at your own risks.
+   * Process a WPLessStylesheet
    * 
-   * @since		1.1
-   * @param 	$css	string CSS you'd like to see in the buffer, before being parse
-   * @deprecated
+   * This logic was previously held in WPLessStylesheet::save()
+   * 
+   * @since 1.4.2
    */
-  public function setBuffer($css)
+  public function saveStylesheet(WPLessStylesheet $stylesheet)
   {
-  	$this->buffer = $css;
+    wp_mkdir_p(dirname($stylesheet->getTargetPath()));
+
+    try
+    {
+      do_action('wp-less_stylesheet_save_pre', $stylesheet, $stylesheet->getVariables());
+
+      file_put_contents($stylesheet->getTargetPath(), apply_filters('wp-less_stylesheet_save', $this->parse(null, $stylesheet->getVariables()), $stylesheet));
+      chmod($stylesheet->getTargetPath(), 0666);
+
+      $stylesheet->save();
+      do_action('wp-less_stylesheet_save_post', $stylesheet);
+    }
+    catch(Exception $e)
+    {
+      wp_die($e->getMessage());
+    }
   }
 }
