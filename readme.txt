@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: dev, theme, themes, toolkit, plugin-toolkit, less, lesscss, lessc, lessphp, productivity, style, stylesheet, api
 Requires at least: 2.8
 Tested up to: 3.3
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 
 Implementation of LESS (Leaner CSS) in order to make themes development easier.
 
