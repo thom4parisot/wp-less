@@ -118,7 +118,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
    *
    * @author oncletom
    * @since 1.1
-   * @version 1.2
+   * @version 1.3
    * @param string $handle
    * @param $force boolean If set to true, rebuild all stylesheets, without considering they are updated or not
    * @return WPLessStylesheet
@@ -126,11 +126,11 @@ class WPLessPlugin extends WPPluginToolkitPlugin
   public function processStylesheet($handle, $force = false)
   {
     $wp_styles = $this->getStyles();
-    $stylesheet = new WPLessStylesheet($wp_styles->registered[$handle]);
+    $stylesheet = new WPLessStylesheet($wp_styles->registered[$handle], $this->getConfiguration()->getVariables());
 
     if ((is_bool($force) && $force) || $stylesheet->hasToCompile())
     {
-      $stylesheet->save($this->getConfiguration()->getVariables());
+      $stylesheet->save();
     }
 
     $wp_styles->registered[$handle]->src = $stylesheet->getTargetUri();
