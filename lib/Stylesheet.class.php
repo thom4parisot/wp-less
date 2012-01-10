@@ -188,12 +188,24 @@ class WPLessStylesheet
    *
    * @author oncletom
    * @since 1.0
-   * @version 1.0
+   * @version 1.1
    * @return boolean
    */
   public function hasToCompile()
   {
-    return $this->is_new || filemtime($this->getSourcePath()) > $this->target_timestamp;
+    //context compilation
+    if ($this->is_new || (defined('WP_DEBUG') && WP_DEBUG))
+    {
+      return true;
+    }
+
+    //registered stylesheet has been updated
+    if (filemtime($this->getSourcePath()) > $this->target_timestamp)
+    {
+      return true;
+    }
+
+    return false;
   }
 
   /**
