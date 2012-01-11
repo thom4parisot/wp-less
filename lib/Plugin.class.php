@@ -102,7 +102,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 
     //because if someone never registers through `wp_(enqueue|register)_stylesheet`,
     //$wp_styles is never initialized, and thus, equals NULL
-    return null === $wp_styles || !$wp_styles instanceof WP_Styles : new WP_Styles() : $wp_styles;
+    return null === $wp_styles || !$wp_styles instanceof WP_Styles ? new WP_Styles() : $wp_styles;
   }
 
   /**
