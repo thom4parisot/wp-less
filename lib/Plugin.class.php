@@ -15,12 +15,20 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 {
   protected $is_filters_registered = false;
   protected $is_hooks_registered = false;
+	protected $compiler = null;
 
   /**
    * @static
    * @var Pattern used to match stylesheet files to process them as pure CSS
    */
   public static $match_pattern = '/\.less$/U';
+
+	public function __construct(WPPluginToolkitConfiguration $configuration)
+	{
+		parent::__construct($configuration);
+
+		$this->compiler = new WPLessCompiler;
+	}
 
   /**
    * Dispatches all events of the plugin
@@ -118,13 +126,11 @@ class WPLessPlugin extends WPPluginToolkitPlugin
   public function processStylesheet($handle, $force = false)
   {
     $wp_styles = $this->getStyles();
-    $stylesheet = new WPLessStylesheet($wp_styles->registered[$handle], $this->getConfiguration()->getVariables());
+    $stylesheet = new WPLessStylesheet($wp_styles->registered[$handle], $this->compiler->getVariables());
 
     if ((is_bool($force) && $force) || $stylesheet->hasToCompile())
     {
-      $compiler = new WPLessCompiler($stylesheet->getSourcePath());
-      $compiler->registerFunctions($this->getConfiguration()->getFunctions());
-      $compiler->saveStylesheet($stylesheet);
+      $this->compiler->saveStylesheet($stylesheet);
     }
 
     $wp_styles->registered[$handle]->src = $stylesheet->getTargetUri();
@@ -145,7 +151,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     $styles =     $this->getQueuedStylesToProcess();
     $wp_styles =  $this->getStyles();
     $force = 			is_bool($force) && $force ? !!$force : false;
-    
+
     WPLessStylesheet::$upload_dir = $this->configuration->getUploadDir();
     WPLessStylesheet::$upload_uri = $this->configuration->getUploadUrl();
 
@@ -198,45 +204,45 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 
   /**
    * Proxy method
-   * 
-   * @see WPLessConfiguration::setVariables()
+   *
+   * @see http://leafo.net/lessphp/docs/#setting_variables_from_php
    * @since 1.4
    */
   public function addVariable($name, $value)
   {
-    $this->getConfiguration()->addVariable($name, $value);
+    $this->compiler->setVariables(array( $name => $value ));
   }
 
   /**
    * Proxy method
-   * 
-   * @see WPLessConfiguration::setVariables()
+   *
+   * @see http://leafo.net/lessphp/docs/#setting_variables_from_php
    * @since 1.4
    */
   public function setVariables(array $variables)
   {
-    $this->getConfiguration()->setVariables($variables);
+    $this->compiler->setVariables($variables);
   }
 
   /**
    * Proxy method
-   * 
-   * @see WPLessConfiguration::registerFunction()
+   *
+   * @see http://leafo.net/lessphp/docs/#custom_functions
    * @since 1.4.2
    */
-  public function registerFunction($name, $callback, $scope = array())
+  public function registerFunction($name, $callback)
   {
-    $this->getConfiguration()->registerFunction($name, $callback, $scope);
+    $this->compiler->registerFunction($name, $callback);
   }
 
   /**
    * Proxy method
-   * 
+   *
    * @see WPLessConfiguration::unregisterFunction()
    * @since 1.4.2
    */
   public function unregisterFunction($name)
   {
-    $this->getConfiguration()->unregisterFunction($name);
+    $this->compiler->unregisterFunction($name);
   }
 }
