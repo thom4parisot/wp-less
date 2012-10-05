@@ -10,7 +10,7 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
   /**
    * Refers to the version of the plugin
    */
-  const VERSION =   '1.4.3';
+  const VERSION =   '1.5-dev';
 
   /**
    * @protected
@@ -36,7 +36,7 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
 
   /**
    * Set global Less variables
-   * 
+   *
    * @since 1.4
    */
   public function addVariable($name, $value)
@@ -46,7 +46,7 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
 
   /**
    * Returns the registered variables
-   * 
+   *
    * @since 1.4
    * @return array
    */
@@ -57,7 +57,7 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
 
   /**
    * Set global Less variables
-   * 
+   *
    * @since 1.4
    */
   public function setVariables(array $variables)
@@ -67,7 +67,7 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
 
   /**
    * Return LESS functions
-   * 
+   *
    * @since 1.4.2
    * @return array
    */
@@ -78,7 +78,7 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
 
   /**
    * Registers a new LESS function
-   * 
+   *
    * @param string $name
    * @param Closure|function $callback
    * @param array $scope CSS handles to limit callback registration to (if empty, applies to every stylesheet) – not used yet
@@ -94,7 +94,7 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
 
   /**
    * Unregisters a LESS function
-   * 
+   *
    * @see http://leafo.net/lessphp/docs/index.html#custom_functions
    */
   public function unregisterFunction($name)

@@ -48,6 +48,14 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 
 == Changelog ==
 
+= Version 1.5 =
+
+Mostly issues related to `lessphp` 0.3.8 features.
+
+ * feature: Smarter LESS compilation (following @import file updates) [#13](https://github.com/oncletom/wp-less/issues/13)
+ * feature: Systematic LESS rebuild through configuration [#14](https://github.com/oncletom/wp-less/issues/14)
+ * improvement: Match lessphp variable API [#12](https://github.com/oncletom/wp-less/issues/12)
+
 = Version 1.4.3 =
 
  * bug: fixed HTTPS/Networked Blog URL replacement ([#8](https://github.com/oncletom/wp-less/issues/8), [#9](https://github.com/oncletom/wp-less/issues/9))
