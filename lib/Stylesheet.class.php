@@ -88,7 +88,7 @@ class WPLessStylesheet
   {
     $target_file =          $this->computeTargetPath();
 
-    $this->source_path =    WP_CONTENT_DIR.preg_replace('#^'.WP_CONTENT_URL.'#U', '', $this->stylesheet->src);
+    $this->source_path =    WP_CONTENT_DIR.preg_replace('#^'.content_url().'#U', '', $this->stylesheet->src);
     $this->source_uri =     $this->stylesheet->src;
     $this->target_path =    self::$upload_dir.$target_file;
     $this->target_uri =     self::$upload_uri.$target_file;
@@ -98,10 +98,10 @@ class WPLessStylesheet
 
   /**
    * Configures the file signature
-   * 
+   *
    * It corresponds to a unique hash taking care of file timestamp and variables.
    * It should be called each time stylesheet variables are updated.
-   * 
+   *
    * @author oncletom
    * @since 1.4.2
    * @version 1.0
@@ -180,7 +180,7 @@ class WPLessStylesheet
 
   /**
    * Returns stylesheet variables
-   * 
+   *
    * @author oncletom
    * @since 1.4.2
    * @return array

@@ -3,8 +3,8 @@ Contributors: oncletom
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=752034
 Tags: dev, theme, themes, toolkit, plugin-toolkit, less, lesscss, lessc, lessphp, productivity, style, stylesheet, api
 Requires at least: 2.8
-Tested up to: 3.3
-Stable tag: 1.4.2
+Tested up to: 3.4
+Stable tag: trunk
 
 Implementation of LESS (Leaner CSS) in order to make themes development easier.
 
@@ -22,15 +22,15 @@ Theme developers can even bundle the plugin without worrying about conflicts: ju
  * Accessors (inherit a value from a specific rule)
  * Functions (logic operations for dynamic results)
 
-The plugin lets you concentrate on what you need: coding CSS. Everything else is handled automatically, from cache management to user delivery.  
+The plugin lets you concentrate on what you need: coding CSS. Everything else is handled automatically, from cache management to user delivery.
 Seriously.
 
 = Requirements =
 
 The sole requirement is to use WordPress API and LESS convention: the `.less` extension.
 
-**Minimal Requirements**: PHP 5.1.2 and WordPress 2.8.  
-**Relies on**: [LESSPHP 0.3.1](http://leafo.net/lessphp/), [plugin-toolkit](http://wordpress.org/extend/plugins/plugin-toolkit/).
+**Minimal Requirements**: PHP 5.1.2 and WordPress 2.8.
+**Relies on**: [LESSPHP 0.3.8](http://leafo.net/lessphp/), [plugin-toolkit](http://wordpress.org/extend/plugins/plugin-toolkit/).
 
 *Notice*: in case you'd like to drop the usage of this plugin, it's safe to do it. You will just need to convert back your stylesheets to CSS.
 
@@ -50,7 +50,9 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 
 = Version 1.4.3 =
 
+ * bug: fixed HTTPS/Networked Blog URL replacement ([#8](https://github.com/oncletom/wp-less/issues/8), [#9](https://github.com/oncletom/wp-less/issues/9))
  * bug: fixed the `property of non-object in Plugin.class.php` bug
+ * lessphp: updated to 0.3.8 (compatible with lessjs 1.3)
 
 = Version 1.4.2 =
 
@@ -122,24 +124,24 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 
 == Frequently Asked Questions ==
 = How do I transform a LESS file into CSS? =
-Consider this bit of code to automatically enqueue your stylesheet from your theme (or plugin):  
+Consider this bit of code to automatically enqueue your stylesheet from your theme (or plugin):
 `wp_enqueue_style('mytheme', get_bloginfo('template_directory').'/style.css', array(), '', 'screen, projection');`
 
-To make it process by WP-LESS, switch to this way:  
+To make it process by WP-LESS, switch to this way:
 `wp_enqueue_style('mytheme', get_bloginfo('template_directory').'/style.less', array(), '', 'screen, projection');`
 
 You understood well: you just need to change the extension of the file.
 
 = And if I don't use the wp_enqueue_style method? =
-For the moment, it's the unique way to handle this.  
+For the moment, it's the unique way to handle this.
 Helpers will be provided soon to include LESS files in your templates in a fluent way.
 
 = What if a *.less file contains only pure CSS? =
-Nothing special. The LESS parser is fully compliant with CSS syntax.  
+Nothing special. The LESS parser is fully compliant with CSS syntax.
 It means nothing will be broken so don't worry.
 
 = I'm a themer and I don't want to ask my users to activate this plugin =
-It's a very good moto. Since the 1.1 release, there is a special bootstrap file: `bootstrap-for-theme.php`.  
+It's a very good moto. Since the 1.1 release, there is a special bootstrap file: `bootstrap-for-theme.php`.
 Everything is prepared and documented inside, with examples and hint.
 
 Just help yourself!

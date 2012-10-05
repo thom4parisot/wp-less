@@ -11,6 +11,9 @@ Plugin URI: http://wordpress.org/extend/plugins/wp-less/
   http://www.opensource.org/licenses/gpl-3.0.html
 */
 
-require dirname(__FILE__).'/lib/Plugin.class.php';
-$WPLessPlugin = WPPluginToolkitPlugin::create('WPLess', __FILE__);
-$WPLessPlugin->dispatch();
+if (!class_exists('WPLessPlugin'))
+{
+	require dirname(__FILE__).'/lib/Plugin.class.php';
+	$WPLessPlugin = WPPluginToolkitPlugin::create('WPLess', __FILE__);
+	$WPLessPlugin->dispatch();
+}
