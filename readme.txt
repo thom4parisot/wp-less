@@ -50,6 +50,7 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 
 = Version 1.4.3 =
 
+ * bug: fixed HTTPS/Networked Blog URL replacement ([#8](https://github.com/oncletom/wp-less/issues/8), [#9](https://github.com/oncletom/wp-less/issues/9))
  * bug: fixed the `property of non-object in Plugin.class.php` bug
  * lessphp: updated to 0.3.8 (compatible with lessjs 1.3)
 
