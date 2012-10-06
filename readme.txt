@@ -25,6 +25,10 @@ Theme developers can even bundle the plugin without worrying about conflicts: ju
 The plugin lets you concentrate on what you need: coding CSS. Everything else is handled automatically, from cache management to user delivery.
 Seriously.
 
+= Documentation =
+
+Advanced topics on how to use the plugin API are [available on the Github project wiki](https://github.com/oncletom/wp-less/wiki).
+
 = Requirements =
 
 The sole requirement is to use WordPress API and LESS convention: the `.less` extension.
@@ -52,6 +56,7 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 
 Mostly issues related to `lessphp` 0.3.8 features.
 
+ * [dev documentation available online](https://github.com/oncletom/wp-less/wiki)
  * feature: providing stylesheet and template directory uri variables (`@stylesheet_directory_uri` & `@template_directory_uri`) following WordPress convention
  * feature: Pruning old compiled files [#15](https://github.com/oncletom/wp-less/issues/15)
  * feature: Smarter LESS compilation (following @import file updates) [#13](https://github.com/oncletom/wp-less/issues/13)
