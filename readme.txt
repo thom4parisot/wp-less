@@ -52,6 +52,8 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 
 Mostly issues related to `lessphp` 0.3.8 features.
 
+ * feature: providing stylesheet and template directory uri variables (`@stylesheet_directory_uri` & `@template_directory_uri`) following WordPress convention
+ * feature: Pruning old compiled files [#15](https://github.com/oncletom/wp-less/issues/15)
  * feature: Smarter LESS compilation (following @import file updates) [#13](https://github.com/oncletom/wp-less/issues/13)
  * feature: Systematic LESS rebuild through configuration [#14](https://github.com/oncletom/wp-less/issues/14)
  * improvement: Match lessphp variable API [#12](https://github.com/oncletom/wp-less/issues/12)
