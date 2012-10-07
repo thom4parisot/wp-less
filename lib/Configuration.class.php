@@ -19,6 +19,14 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
 	 */
 	protected $alwaysRecompile = false;
 
+	/**
+	 * Time to live before pruning CSS cache
+	 *
+	 * @protected
+	 * @var int delay in seconds
+	 */
+	protected $ttl = 432000;    // 5 days
+
 
   protected function configure()
   {
