@@ -34,6 +34,7 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
   protected function configureOptions()
   {
     $this->setVariables(array());
+	  $this->alwaysRecompile((defined('WP_DEBUG') && WP_DEBUG) || (defined('WP_LESS_ALWAYS_RECOMPILE') && WP_LESS_ALWAYS_RECOMPILE));
   }
 
   /**
@@ -71,10 +72,16 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
 	 * Set compilation strategy
 	 *
 	 * @param $bFlag bool
+	 * @return bool Actual compilation "strategy"
 	 */
-	public function alwaysRecompile($bFlag)
+	public function alwaysRecompile($bFlag = null)
 	{
-		$this->alwaysRecompile = !!$bFlag;
+		if (!is_null($bFlag))
+		{
+			$this->alwaysRecompile = !!$bFlag;
+		}
+
+		return $this->alwaysRecompile;
 	}
 
   /**
