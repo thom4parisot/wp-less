@@ -27,23 +27,6 @@ class WPLessCompiler extends lessc
 	}
 
   /**
-   * Parse a LESS file
-   *
-   * @api
-   * @see lessc::parse
-   * @deprecated
-   * @throws Exception
-   * @param string $text [optional] Custom CSS to parse
-   * @param array $variables [optional] Variables to inject in the stylesheet
-   * @return string CSS output
-   */
-  public function parse($text = null, $variables = null)
-  {
-  	do_action('wp-less_compiler_parse_pre', $this, $text, $variables);
-    return apply_filters('wp-less_compiler_parse', parent::parse($text, $variables));
-  }
-
-  /**
    * Registers a set of functions
    *
    * @param array $functions
