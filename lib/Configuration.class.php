@@ -12,12 +12,6 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
    */
   const VERSION =   '1.5-dev';
 
-  /**
-   * @protected
-   * @see http://leafo.net/lessphp/docs/index.html#custom_functions
-   */
-  protected $functions = array();
-
 	/**
 	 * @protected
 	 * @deprecated
@@ -33,39 +27,7 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
 
   protected function configureOptions()
   {
-    $this->setVariables(array());
 	  $this->alwaysRecompile((defined('WP_DEBUG') && WP_DEBUG) || (defined('WP_LESS_ALWAYS_RECOMPILE') && WP_LESS_ALWAYS_RECOMPILE));
-  }
-
-  /**
-   * Set global Less variables
-   *
-   * @since 1.4
-   */
-  public function addVariable($name, $value)
-  {
-    $this->variables[$name] = $value;
-  }
-
-  /**
-   * Returns the registered variables
-   *
-   * @since 1.4
-   * @return array
-   */
-  public function getVariables()
-  {
-    return $this->variables;
-  }
-
-  /**
-   * Set global Less variables
-   *
-   * @since 1.4
-   */
-  public function setVariables(array $variables)
-  {
-    $this->variables = $variables;
   }
 
 	/**
@@ -82,16 +44,5 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
 		}
 
 		return $this->alwaysRecompile;
-	}
-
-  /**
-   * Return LESS functions
-   *
-   * @since 1.4.2
-   * @return array
-   */
-  public function getFunctions()
-  {
-    return $this->functions;
 	}
 }
