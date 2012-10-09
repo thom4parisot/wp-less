@@ -13,20 +13,6 @@ if (!class_exists('WPPluginToolkitPlugin'))
  */
 class WPLessPlugin extends WPPluginToolkitPlugin
 {
-	/**
-	 * Working mode as a plugin (default)
-	 * @since 1.5
-	 * @const
-	 */
-	const MODE_PLUGIN = 'plugin';
-
-	/**
-	 * Working mode as embedded in a theme
-	 * @since 1.5
-	 * @const
-	 */
-	const MODE_THEME = 'theme';
-
   protected $is_filters_registered = false;
   protected $is_hooks_registered = false;
 	protected $compiler = null;
