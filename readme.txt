@@ -33,7 +33,7 @@ Advanced topics on how to use the plugin API are [available on the Github projec
 
 The sole requirement is to use WordPress API and LESS convention: the `.less` extension.
 
-**Minimal Requirements**: PHP 5.2.0 and WordPress 2.8.
+**Minimal Requirements**: PHP 5.2.4 and WordPress 2.8.
 **Relies on**: [LESSPHP 0.3.8](http://leafo.net/lessphp/), [plugin-toolkit](http://wordpress.org/extend/plugins/plugin-toolkit/).
 
 *Notice*: in case you'd like to drop the usage of this plugin, it's safe to do it. You will just need to convert back your stylesheets to CSS.
