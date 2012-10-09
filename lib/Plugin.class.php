@@ -13,6 +13,20 @@ if (!class_exists('WPPluginToolkitPlugin'))
  */
 class WPLessPlugin extends WPPluginToolkitPlugin
 {
+	/**
+	 * Working mode as a plugin (default)
+	 * @since 1.5
+	 * @const
+	 */
+	const MODE_PLUGIN = 'plugin';
+
+	/**
+	 * Working mode as embedded in a theme
+	 * @since 1.5
+	 * @const
+	 */
+	const MODE_THEME = 'theme';
+
   protected $is_filters_registered = false;
   protected $is_hooks_registered = false;
 	protected $compiler = null;
@@ -41,7 +55,33 @@ class WPLessPlugin extends WPPluginToolkitPlugin
   public function dispatch()
   {
     $this->registerHooks();
+
+	  /*
+	   * Garbage Collection Registration
+	   */
+	  $gc = new WPLessGarbagecollector($this->configuration);
+
+	  if ($this->getConfiguration()->getMode() === self::MODE_PLUGIN)
+	  {
+		  add_action('wp-less_garbage_collection', array($gc, 'clean'));
+
+		  register_activation_hook(WP_PLUGIN_DIR.'/wp-less/bootstrap.php', array('WPLessPlugin', 'install'));
+		  register_deactivation_hook(WP_PLUGIN_DIR.'/wp-less/bootstrap.php', array('WPLessPlugin', 'uninstall'));
+	  }
   }
+
+	public static function install()
+	{
+		add_option('wp_less_installed', 1, false, false);
+		update_option('wp_less_installed', 1);
+		wp_schedule_event(time(), 'daily', 'wp-less_garbage_collection');
+	}
+
+	public static function uninstall()
+	{
+		update_option('wp_less_installed', 0);
+		wp_clear_scheduled_hook('wp-less_garbage_collection');
+	}
 
   /**
    * Correct Stylesheet URI

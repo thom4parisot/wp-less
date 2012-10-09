@@ -27,7 +27,6 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
 	 */
 	protected $ttl = 432000;    // 5 days
 
-
   protected function configure()
   {
     $this->configureOptions();
