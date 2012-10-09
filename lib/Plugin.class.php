@@ -60,6 +60,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 	   * Garbage Collection Registration
 	   */
 	  $gc = new WPLessGarbagecollector($this->configuration);
+	  $gc->clean();
 
 	  if ($this->getConfiguration()->getMode() === self::MODE_PLUGIN)
 	  {
@@ -70,12 +71,22 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 	  }
   }
 
-	public static function install()
+	/**
+	 * Performs plugin install actions
+	 *
+	 * @since 1.5
+	 */
+	public function install()
 	{
 		wp_schedule_event(time(), 'daily', 'wp-less_garbage_collection');
 	}
 
-	public static function uninstall()
+	/**
+	 * Performs plugin uninstall actions
+	 *
+	 * @since 1.5
+	 */
+	public function uninstall()
 	{
 		wp_clear_scheduled_hook('wp-less_garbage_collection');
 	}
