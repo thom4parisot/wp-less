@@ -19,6 +19,13 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
 	 */
 	protected $alwaysRecompile = false;
 
+	/**
+	 * Time to live before pruning CSS cache
+	 *
+	 * @protected
+	 * @var int delay in seconds
+	 */
+	protected $ttl = 432000;    // 5 days
 
   protected function configure()
   {
@@ -44,5 +51,17 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
 		}
 
 		return $this->alwaysRecompile;
+	}
+
+	/**
+	 * Retrieves the TTL of a compiled CSS file
+	 *
+	 * @api
+	 * @since 1.5
+	 * @return int Time to live of a compiled CSS file
+	 */
+	public function getTtl()
+	{
+		return $this->ttl;
 	}
 }

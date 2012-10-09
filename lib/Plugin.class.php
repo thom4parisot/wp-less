@@ -40,8 +40,42 @@ class WPLessPlugin extends WPPluginToolkitPlugin
    */
   public function dispatch()
   {
-    $this->registerHooks();
+	  if ($this->is_hooks_registered)
+	  {
+		  return false;
+	  }
+
+	  /*
+	   * Garbage Collection Registration
+	   */
+	  $gc = new WPLessGarbagecollector($this->configuration);
+	  add_action('wp-less_garbage_collection', array($gc, 'clean'));
+
+	  /*
+	   * Last Hooks
+	   */
+	  $this->registerHooks();
   }
+
+	/**
+	 * Performs plugin install actions
+	 *
+	 * @since 1.5
+	 */
+	public function install()
+	{
+		wp_schedule_event(time(), 'daily', 'wp-less_garbage_collection');
+	}
+
+	/**
+	 * Performs plugin uninstall actions
+	 *
+	 * @since 1.5
+	 */
+	public function uninstall()
+	{
+		wp_clear_scheduled_hook('wp-less_garbage_collection');
+	}
 
   /**
    * Correct Stylesheet URI

@@ -15,5 +15,9 @@ if (!class_exists('WPLessPlugin'))
 {
 	require dirname(__FILE__).'/lib/Plugin.class.php';
 	$WPLessPlugin = WPPluginToolkitPlugin::create('WPLess', __FILE__);
+
+	register_activation_hook(__FILE__, array($WPLessPlugin, 'install'));
+	register_deactivation_hook(__FILE__, array($WPLessPlugin, 'uninstall'));
+
 	$WPLessPlugin->dispatch();
 }
