@@ -180,12 +180,12 @@ class WPLessStylesheet
    *
    * @author oncletom
    * @since 1.0
-   * @version 1.2
+   * @version 1.3
    * @return boolean
    */
   public function hasToCompile()
   {
-    return ($this->is_new || (defined('WP_DEBUG') && WP_DEBUG));
+    return $this->is_new;
   }
 
   /**

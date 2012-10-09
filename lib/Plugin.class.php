@@ -130,7 +130,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     $wp_styles = $this->getStyles();
     $stylesheet = new WPLessStylesheet($wp_styles->registered[$handle], $this->compiler->getVariables());
 
-    if ((is_bool($force) && $force) || $stylesheet->hasToCompile())
+    if ((is_bool($force) && $force) || $this->configuration->alwaysRecompile() || $stylesheet->hasToCompile())
     {
       $this->compiler->saveStylesheet($stylesheet);
     }
