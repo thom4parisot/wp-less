@@ -54,21 +54,21 @@ class WPLessPlugin extends WPPluginToolkitPlugin
    */
   public function dispatch()
   {
-    $this->registerHooks();
+	  if ($this->is_hooks_registered)
+	  {
+		  return false;
+	  }
 
 	  /*
 	   * Garbage Collection Registration
 	   */
 	  $gc = new WPLessGarbagecollector($this->configuration);
-	  $gc->clean();
+	  add_action('wp-less_garbage_collection', array($gc, 'clean'));
 
-	  if ($this->getConfiguration()->getMode() === self::MODE_PLUGIN)
-	  {
-		  add_action('wp-less_garbage_collection', array($gc, 'clean'));
-
-		  register_activation_hook(WP_PLUGIN_DIR.'/wp-less/bootstrap.php', array($this, 'install'));
-		  register_deactivation_hook(WP_PLUGIN_DIR.'/wp-less/bootstrap.php', array($this, 'uninstall'));
-	  }
+	  /*
+	   * Last Hooks
+	   */
+	  $this->registerHooks();
   }
 
 	/**
