@@ -65,21 +65,18 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 	  {
 		  add_action('wp-less_garbage_collection', array($gc, 'clean'));
 
-		  register_activation_hook(WP_PLUGIN_DIR.'/wp-less/bootstrap.php', array('WPLessPlugin', 'install'));
-		  register_deactivation_hook(WP_PLUGIN_DIR.'/wp-less/bootstrap.php', array('WPLessPlugin', 'uninstall'));
+		  register_activation_hook(WP_PLUGIN_DIR.'/wp-less/bootstrap.php', array($this, 'install'));
+		  register_deactivation_hook(WP_PLUGIN_DIR.'/wp-less/bootstrap.php', array($this, 'uninstall'));
 	  }
   }
 
 	public static function install()
 	{
-		add_option('wp_less_installed', 1, false, false);
-		update_option('wp_less_installed', 1);
 		wp_schedule_event(time(), 'daily', 'wp-less_garbage_collection');
 	}
 
 	public static function uninstall()
 	{
-		update_option('wp_less_installed', 0);
 		wp_clear_scheduled_hook('wp-less_garbage_collection');
 	}
 
