@@ -23,7 +23,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
    */
   public static $match_pattern = '/\.less$/U';
 
-	public function __construct(WPPluginToolkitConfiguration $configuration)
+	public function __construct(WPLessConfiguration $configuration)
 	{
 		parent::__construct($configuration);
 
@@ -161,12 +161,18 @@ class WPLessPlugin extends WPPluginToolkitPlugin
    */
   public function processStylesheet($handle, $force = false)
   {
+	  $force = !!$force ? $force : $this->configuration->alwaysRecompile();
+
     $wp_styles = $this->getStyles();
     $stylesheet = new WPLessStylesheet($wp_styles->registered[$handle], $this->compiler->getVariables());
 
-    if ((is_bool($force) && $force) || $this->configuration->alwaysRecompile() || $stylesheet->hasToCompile())
+	  if ($this->configuration->getCompilationStrategy() === 'legacy' && $stylesheet->hasToCompile())
+	  {
+			$this->compiler->saveStylesheet($stylesheet);
+	  }
+    elseif ($this->configuration->getCompilationStrategy() !== 'legacy')
     {
-      $this->compiler->saveStylesheet($stylesheet);
+	    $this->compiler->cacheStylesheet($stylesheet, $force);
     }
 
     $wp_styles->registered[$handle]->src = $stylesheet->getTargetUri();
@@ -228,7 +234,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     {
       do_action('wp-less_init', $this);
       add_action('wp', array($this, 'processStylesheets'), 999, 0);
-      //add_filter('wp-less_stylesheet_save', array($this, 'filterStylesheetUri'), 10, 2);
+      add_filter('wp-less_stylesheet_save', array($this, 'filterStylesheetUri'), 10, 2);
     }
     else
     {
