@@ -3,7 +3,7 @@
 Plugin Name: WP LESS
 Description: LESS extends CSS with variables, mixins, operations and nested rules. This plugin magically parse all your <code>*.less</code> files queued with <code>wp_enqueue_style</code> in WordPress.
 Author: Oncle Tom
-Version: 1.4.3
+Version: 1.5.0-beta
 Author URI: http://case.oncle-tom.net/
 Plugin URI: http://wordpress.org/extend/plugins/wp-less/
 
@@ -15,5 +15,9 @@ if (!class_exists('WPLessPlugin'))
 {
 	require dirname(__FILE__).'/lib/Plugin.class.php';
 	$WPLessPlugin = WPPluginToolkitPlugin::create('WPLess', __FILE__);
+
+	register_activation_hook(__FILE__, array($WPLessPlugin, 'install'));
+	register_deactivation_hook(__FILE__, array($WPLessPlugin, 'uninstall'));
+
 	$WPLessPlugin->dispatch();
 }

@@ -15,12 +15,22 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 {
   protected $is_filters_registered = false;
   protected $is_hooks_registered = false;
+	protected $compiler = null;
 
   /**
    * @static
    * @var Pattern used to match stylesheet files to process them as pure CSS
    */
   public static $match_pattern = '/\.less$/U';
+
+	public function __construct(WPLessConfiguration $configuration)
+	{
+		parent::__construct($configuration);
+
+		$this->compiler = new WPLessCompiler;
+		$this->compiler->setVariable('stylesheet_directory_uri', "'".get_stylesheet_directory_uri()."'");
+		$this->compiler->setVariable('template_directory_uri', "'".get_template_directory_uri()."'");
+	}
 
   /**
    * Dispatches all events of the plugin
@@ -30,8 +40,42 @@ class WPLessPlugin extends WPPluginToolkitPlugin
    */
   public function dispatch()
   {
-    $this->registerHooks();
+	  if ($this->is_hooks_registered)
+	  {
+		  return false;
+	  }
+
+	  /*
+	   * Garbage Collection Registration
+	   */
+	  $gc = new WPLessGarbagecollector($this->configuration);
+	  add_action('wp-less_garbage_collection', array($gc, 'clean'));
+
+	  /*
+	   * Last Hooks
+	   */
+	  $this->registerHooks();
   }
+
+	/**
+	 * Performs plugin install actions
+	 *
+	 * @since 1.5
+	 */
+	public function install()
+	{
+		wp_schedule_event(time(), 'daily', 'wp-less_garbage_collection');
+	}
+
+	/**
+	 * Performs plugin uninstall actions
+	 *
+	 * @since 1.5
+	 */
+	public function uninstall()
+	{
+		wp_clear_scheduled_hook('wp-less_garbage_collection');
+	}
 
   /**
    * Correct Stylesheet URI
@@ -117,14 +161,18 @@ class WPLessPlugin extends WPPluginToolkitPlugin
    */
   public function processStylesheet($handle, $force = false)
   {
-    $wp_styles = $this->getStyles();
-    $stylesheet = new WPLessStylesheet($wp_styles->registered[$handle], $this->getConfiguration()->getVariables());
+	  $force = !!$force ? $force : $this->configuration->alwaysRecompile();
 
-    if ((is_bool($force) && $force) || $stylesheet->hasToCompile())
+    $wp_styles = $this->getStyles();
+    $stylesheet = new WPLessStylesheet($wp_styles->registered[$handle], $this->compiler->getVariables());
+
+	  if ($this->configuration->getCompilationStrategy() === 'legacy' && $stylesheet->hasToCompile())
+	  {
+			$this->compiler->saveStylesheet($stylesheet);
+	  }
+    elseif ($this->configuration->getCompilationStrategy() !== 'legacy')
     {
-      $compiler = new WPLessCompiler($stylesheet->getSourcePath());
-      $compiler->registerFunctions($this->getConfiguration()->getFunctions());
-      $compiler->saveStylesheet($stylesheet);
+	    $this->compiler->cacheStylesheet($stylesheet, $force);
     }
 
     $wp_styles->registered[$handle]->src = $stylesheet->getTargetUri();
@@ -145,7 +193,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     $styles =     $this->getQueuedStylesToProcess();
     $wp_styles =  $this->getStyles();
     $force = 			is_bool($force) && $force ? !!$force : false;
-    
+
     WPLessStylesheet::$upload_dir = $this->configuration->getUploadDir();
     WPLessStylesheet::$upload_uri = $this->configuration->getUploadUrl();
 
@@ -198,45 +246,45 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 
   /**
    * Proxy method
-   * 
-   * @see WPLessConfiguration::setVariables()
+   *
+   * @see http://leafo.net/lessphp/docs/#setting_variables_from_php
    * @since 1.4
    */
   public function addVariable($name, $value)
   {
-    $this->getConfiguration()->addVariable($name, $value);
+    $this->compiler->setVariables(array( $name => $value ));
   }
 
   /**
    * Proxy method
-   * 
-   * @see WPLessConfiguration::setVariables()
+   *
+   * @see http://leafo.net/lessphp/docs/#setting_variables_from_php
    * @since 1.4
    */
   public function setVariables(array $variables)
   {
-    $this->getConfiguration()->setVariables($variables);
+    $this->compiler->setVariables($variables);
   }
 
   /**
    * Proxy method
-   * 
-   * @see WPLessConfiguration::registerFunction()
+   *
+   * @see http://leafo.net/lessphp/docs/#custom_functions
    * @since 1.4.2
    */
-  public function registerFunction($name, $callback, $scope = array())
+  public function registerFunction($name, $callback)
   {
-    $this->getConfiguration()->registerFunction($name, $callback, $scope);
+    $this->compiler->registerFunction($name, $callback);
   }
 
   /**
    * Proxy method
-   * 
+   *
    * @see WPLessConfiguration::unregisterFunction()
    * @since 1.4.2
    */
   public function unregisterFunction($name)
   {
-    $this->getConfiguration()->unregisterFunction($name);
+    $this->compiler->unregisterFunction($name);
   }
 }

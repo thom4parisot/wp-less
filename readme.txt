@@ -2,7 +2,7 @@
 Contributors: oncletom
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=752034
 Tags: dev, theme, themes, toolkit, plugin-toolkit, less, lesscss, lessc, lessphp, productivity, style, stylesheet, api
-Requires at least: 2.8
+Requires at least: 3.2
 Tested up to: 3.4
 Stable tag: trunk
 
@@ -25,11 +25,15 @@ Theme developers can even bundle the plugin without worrying about conflicts: ju
 The plugin lets you concentrate on what you need: coding CSS. Everything else is handled automatically, from cache management to user delivery.
 Seriously.
 
+= Documentation =
+
+Advanced topics on how to use the plugin API are [available on the Github project wiki](https://github.com/oncletom/wp-less/wiki).
+
 = Requirements =
 
 The sole requirement is to use WordPress API and LESS convention: the `.less` extension.
 
-**Minimal Requirements**: PHP 5.1.2 and WordPress 2.8.
+**Minimal Requirements**: PHP 5.2.4 and WordPress 3.2.
 **Relies on**: [LESSPHP 0.3.8](http://leafo.net/lessphp/), [plugin-toolkit](http://wordpress.org/extend/plugins/plugin-toolkit/).
 
 *Notice*: in case you'd like to drop the usage of this plugin, it's safe to do it. You will just need to convert back your stylesheets to CSS.
@@ -47,6 +51,18 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
  1. Activate it through your WordPress plugins administration page
 
 == Changelog ==
+
+= Version 1.5 =
+
+Mostly issues related to `lessphp` 0.3.8 features.
+
+ * /!\ Leveraged PHP Minimum Version to 5.2.4 /!\ ([WordPress already asks you the same](http://wordpress.org/about/requirements/))
+ * [dev documentation available online](https://github.com/oncletom/wp-less/wiki)
+ * feature: providing stylesheet and template directory uri variables (`@stylesheet_directory_uri` & `@template_directory_uri`) following WordPress convention
+ * feature: Pruning old compiled files [#15](https://github.com/oncletom/wp-less/issues/15)
+ * feature: Smarter LESS compilation (following @import file updates) [#13](https://github.com/oncletom/wp-less/issues/13)
+ * feature: Systematic LESS rebuild through configuration [#14](https://github.com/oncletom/wp-less/issues/14)
+ * improvement: Match lessphp variable API [#12](https://github.com/oncletom/wp-less/issues/12)
 
 = Version 1.4.3 =
 
