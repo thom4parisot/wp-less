@@ -12,12 +12,24 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
    */
   const VERSION =   '1.5-dev';
 
+
+
 	/**
+	 * Current compilation strategy
+	 *
+	 * @since 1.5
 	 * @protected
-	 * @deprecated
-	 * @var bool
+	 * @var string
 	 */
-	protected $alwaysRecompile = false;
+	protected $compilation_strategy = 'deep';
+
+	/**
+	 * Available compilation strategies
+	 *
+	 * @since 1.5
+	 * @var array
+	 */
+	protected $compilation_strategies = array('legacy', 'always', 'deep');
 
 	/**
 	 * Time to live before pruning CSS cache
@@ -34,23 +46,56 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
 
   protected function configureOptions()
   {
-	  $this->alwaysRecompile((defined('WP_DEBUG') && WP_DEBUG) || (defined('WP_LESS_ALWAYS_RECOMPILE') && WP_LESS_ALWAYS_RECOMPILE));
+	  if (defined('WP_LESS_COMPILATION') && WP_LESS_COMPILATION)
+	  {
+		  $this->setCompilationStrategy(WP_LESS_COMPILATION);
+	  }
+
+	  //previous setting can be overridden for special reasons (dev/prod for example)
+	  if ((defined('WP_DEBUG') && WP_DEBUG) || (defined('WP_LESS_ALWAYS_RECOMPILE') && WP_LESS_ALWAYS_RECOMPILE))
+	  {
+		  $this->setCompilationStrategy('always');
+	  }
   }
+
+	/**
+	 * Current compilation strategy
+	 *
+	 * @api
+	 * @since 1.5
+	 * @return string Active compilation strategy
+	 */
+	public function getCompilationStrategy()
+	{
+		return $this->compilation_strategy;
+	}
+
+	/**
+	 * Always recompile
+	 *
+	 * @since 1.5
+	 * @return bool
+	 */
+	public function alwaysRecompile()
+	{
+		return $this->compilation_strategy === 'always';
+	}
 
 	/**
 	 * Set compilation strategy
 	 *
-	 * @param $bFlag bool
-	 * @return bool Actual compilation "strategy"
+	 * @api
+	 * @since 1.5
+	 * @param $strategy string Actual compilation "strategy"
 	 */
-	public function alwaysRecompile($bFlag = null)
+	public function setCompilationStrategy($strategy)
 	{
-		if (!is_null($bFlag))
+		if (!in_array($strategy, $this->compilation_strategies))
 		{
-			$this->alwaysRecompile = !!$bFlag;
+			throw new WPLessException('Unknown compile strategy: ['.$strategy.'] provided.');
 		}
 
-		return $this->alwaysRecompile;
+		$this->compilation_strategy = $strategy;
 	}
 
 	/**
