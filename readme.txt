@@ -2,7 +2,7 @@
 Contributors: oncletom
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=752034
 Tags: dev, theme, themes, toolkit, plugin-toolkit, less, lesscss, lessc, lessphp, productivity, style, stylesheet, api
-Requires at least: 2.8
+Requires at least: 3.2
 Tested up to: 3.4
 Stable tag: trunk
 
@@ -33,7 +33,7 @@ Advanced topics on how to use the plugin API are [available on the Github projec
 
 The sole requirement is to use WordPress API and LESS convention: the `.less` extension.
 
-**Minimal Requirements**: PHP 5.2.4 and WordPress 2.8.
+**Minimal Requirements**: PHP 5.2.4 and WordPress 3.2.
 **Relies on**: [LESSPHP 0.3.8](http://leafo.net/lessphp/), [plugin-toolkit](http://wordpress.org/extend/plugins/plugin-toolkit/).
 
 *Notice*: in case you'd like to drop the usage of this plugin, it's safe to do it. You will just need to convert back your stylesheets to CSS.
