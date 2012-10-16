@@ -139,60 +139,19 @@ Mostly issues related to `lessphp` 0.3.8 features.
 
 
 == Frequently Asked Questions ==
-= How do I transform a LESS file into CSS? =
-Consider this bit of code to automatically enqueue your stylesheet from your theme (or plugin):
-`wp_enqueue_style('mytheme', get_bloginfo('template_directory').'/style.css', array(), '', 'screen, projection');`
 
-To make it process by WP-LESS, switch to this way:
-`wp_enqueue_style('mytheme', get_bloginfo('template_directory').'/style.less', array(), '', 'screen, projection');`
+Lots of efforts have been done to write a [consistent documentation](https://github.com/oncletom/wp-less/wiki)
+to address issues you may encounter.
 
-You understood well: you just need to change the extension of the file.
-
-= And if I don't use the wp_enqueue_style method? =
-For the moment, it's the unique way to handle this.
-Helpers will be provided soon to include LESS files in your templates in a fluent way.
-
-= What if a *.less file contains only pure CSS? =
-Nothing special. The LESS parser is fully compliant with CSS syntax.
-It means nothing will be broken so don't worry.
-
-= I'm a themer and I don't want to ask my users to activate this plugin =
-It's a very good moto. Since the 1.1 release, there is a special bootstrap file: `bootstrap-for-theme.php`.
-Everything is prepared and documented inside, with examples and hint.
-
-Just help yourself!
-
-= I want to inject custom variables =
-LESS PHP 0.3.0 introduced a native way to set variables from PHP.
-
-If you initialized the class by yourself, do it this way:
-`$WPLessPlugin->addVariable('@default_color', '#fff');`
-
-If you don't manage the plugin by yourself:
-`WPPluginToolkitPlugin::getInstance('WPLess')->addVariable($name, $value);`
-
-And if you want to do that from a theme, with less code:
-
-1. include the `wp-less/lib/helper/ThemeHelper.php` file;
-1. call `less_add_variable('@default_color', '#fff')`
-
-= I want to create a new custom LESS function =
-LESS PHP 0.3.1. introducted a new way to register functions without subclassing the compiler.
-
-If you initialized the class by yourself, do it this way:
-`$WPLessPlugin->registerFunction('double', 'lessphp_double');`
-
-If you don't manage the plugin by yourself:
-`WPPluginToolkitPlugin::getInstance('WPLess')->registerFunction('double', 'lessphp_double');`
-
-And if you want to do that from a theme, with less code:
-
-1. include the `wp-less/lib/helper/ThemeHelper.php` file;
-1. call `less_register_function('double', 'lessphp_double')`
-
-**Notice**: in this example, we assume `lessphp_double` is a valid [PHP callback](http://php.net/manual/en/language.pseudo-types.php#language.types.callback), as stated in `lessphp` documentation.
+It covers topics like path customization, declaring LESS variables from PHP, creating new LESS functions etc.
 
 == Upgrade Notice ==
+
+= 1.5 =
+
+Some changes in the API may breaks compatibility with your PHP code dealing with `wp-less`.
+
+Please [open issues](https://github.com/oncletom/wp-less/issues) and describe your technical problems [if the usage is not documented](https://github.com/oncletom/wp-less/wiki).
 
 = 1.4 =
 
