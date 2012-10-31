@@ -55,6 +55,11 @@ class WPLessCompiler extends lessc
 		$this->registeredVars[ $name ] = $value;
 	}
 
+	public function getImportDir()
+	{
+		return (array)$this->importDir;
+	}
+
 	/**
 	 * Smart caching and retrieval of a tree of @import LESS stylesheets
 	 *

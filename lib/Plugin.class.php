@@ -13,8 +13,22 @@ if (!class_exists('WPPluginToolkitPlugin'))
  */
 class WPLessPlugin extends WPPluginToolkitPlugin
 {
-  protected $is_filters_registered = false;
-  protected $is_hooks_registered = false;
+	/**
+	 * @protected
+	 * @var bool
+	 */
+	protected $is_filters_registered = false;
+
+	/**
+	 * @protected
+	 * @var bool
+	 */
+	protected $is_hooks_registered = false;
+
+	/**
+	 * @protected
+	 * @var null|WPLessCompiler
+	 */
 	protected $compiler = null;
 
   /**
@@ -280,11 +294,47 @@ class WPLessPlugin extends WPPluginToolkitPlugin
   /**
    * Proxy method
    *
-   * @see WPLessConfiguration::unregisterFunction()
+   * @see lessc::unregisterFunction()
    * @since 1.4.2
    */
   public function unregisterFunction($name)
   {
     $this->compiler->unregisterFunction($name);
   }
+
+	/**
+	 * Proxy method
+	 *
+	 * @see WPLessCompiler::getImportDir()
+	 * @return array
+	 * @since 1.5.0
+	 */
+	public function getImportDir()
+	{
+		return $this->compiler->getImportDir();
+	}
+
+	/**
+	 * Proxy method
+	 *
+	 * @see lessc::addImportDir()
+	 * @param string $dir
+	 * @since 1.5.0
+	 */
+	public function addImportDir($dir)
+	{
+		$this->compiler->addImportDir($dir);
+	}
+
+	/**
+	 * Proxy method
+	 *
+	 * @see lessc::setImportDir()
+	 * @param array $dirs
+	 * @since 1.5.0
+	 */
+	public function setImportDir($dirs)
+	{
+		$this->compiler->setImportDir($dirs);
+	}
 }
