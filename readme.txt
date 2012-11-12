@@ -58,6 +58,7 @@ Mostly issues related to `lessphp` 0.3.8 features.
 
  * /!\ Leveraged PHP Minimum Version to 5.2.4 /!\ ([WordPress already asks you the same](http://wordpress.org/about/requirements/))
  * [dev documentation available online](https://github.com/oncletom/wp-less/wiki)
+ * bug: stylesheets compilation is now processed on `wp_enqueue_scripts` ([prop of @RixTox](https://github.com/oncletom/wp-less/pull/18))
  * feature: providing stylesheet and template directory uri variables (`@stylesheet_directory_uri` & `@template_directory_uri`) following WordPress convention
  * feature: Pruning old compiled files [#15](https://github.com/oncletom/wp-less/issues/15)
  * feature: Smarter LESS compilation (following @import file updates) [#13](https://github.com/oncletom/wp-less/issues/13)
