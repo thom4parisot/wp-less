@@ -212,7 +212,6 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     public function processStylesheets($force = false)
     {
         $styles = $this->getQueuedStylesToProcess();
-        $wp_styles = $this->getStyles();
         $force = is_bool($force) && $force ? !!$force : false;
 
         WPLessStylesheet::$upload_dir = $this->configuration->getUploadDir();
