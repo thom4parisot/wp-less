@@ -125,7 +125,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     protected function _filterStylesheetUri($matches)
   {
-      if (strpos($matches['url'], 'http') === 0 || strpos($matches['url'], 'data:') === 0 || strpos($matches['url'], '/') === 0){
+      if (preg_match('#^(http|@|data:|/)#Ui', $matches['url'])){
           return $matches[0];
       }
 
