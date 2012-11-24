@@ -52,6 +52,13 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 
 == Changelog ==
 
+= Version 1.5.1 =
+
+ * feature(beta): less stylesheets can be enqueued in `wp-admin`
+ * feature: added `WPLessConfiguration::getTtl` method to let you configure the delay of old-files cleanup
+ * bug: fixed automatic replacements with absolute and data uri ([#19](https://github.com/oncletom/wp-less/issue/19))
+ * bug: fixed garbage collector; was pruning active stylesheets even if too old (buggy with active cache) ([#20](https://github.com/oncletom/wp-less/issue/20))
+
 = Version 1.5 =
 
 Mostly issues related to `lessphp` 0.3.8 features.
