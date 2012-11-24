@@ -98,27 +98,41 @@ class WPLessPlugin extends WPPluginToolkitPlugin
    *
    * @author oncletom
    * @since 1.2
-   * @version 1.1
+   * @version 1.2
    * @param string $css parsed CSS
    * @param WPLessStylesheet Stylesheet currently processed
    * @return string parsed and fixed CSS
    */
   public function filterStylesheetUri($css, WPLessStylesheet $stylesheet)
   {
-    $token = '@'.uniqid('wpless', true).'@';
-    $css = preg_replace('#url\s*\(([\'"]{0,1})([^\'"\)]+)\1\)#siU', 'url(\1'.$token.'\2\1)', $css);
+    $this->_TmpBaseDir = dirname($stylesheet->getSourceUri());
 
-    /*
-     * Token replacement:
-     * - preserve data URI
-     * - prefix file URI with absolute path to the theme
+    return preg_replace_callback(
+        '#url\s*\((?P<quote>[\'"]{0,1})(?P<url>[^\'"\)]+)\1\)#siU',
+        array($this, '_filterStylesheetUri'),
+        $css
+    );
+
+    unset($this->_TmpBaseDir);
+  }
+
+    /**
+     * Returns a proper url() CSS key with absolute paths if needed
+     *
+     * @protected
+     * @param array $matches Expects at least 0, 'uri' and 'quote' keys
+     * @return string
      */
-    $css = str_replace(
-      array($token.'data:', $token),
-      array('data:', dirname($stylesheet->getSourceUri()).'/'),
-    $css);
+    protected function _filterStylesheetUri($matches)
+  {
+      if (preg_match('#^(http|@|data:|/)#Ui', $matches['url'])){
+          return $matches[0];
+      }
 
-    return $css;
+      return sprintf('url(%s%s%1$s)',
+          $matches['quote'],
+          $this->_TmpBaseDir.'/'.$matches['url']
+      );
   }
 
   /**
