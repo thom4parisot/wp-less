@@ -89,7 +89,7 @@ class WPLessStylesheet
     $this->target_path =    self::$upload_dir.$target_file;
     $this->target_uri =     self::$upload_uri.$target_file;
 
-    $this->source_timestamp = filemtime($this->source_path);
+    $this->setSourceTimestamp(filemtime($this->source_path));
   }
 
   /**
@@ -197,5 +197,17 @@ class WPLessStylesheet
   public function save()
   {
     $this->is_new = false;
+  }
+
+  /**
+   * Sets the source timestamp of the file
+   * Mostly used to generate a proper cache busting URI
+   *
+   * @since 1.5.2
+   * @param integer $timestamp
+   */
+  public function setSourceTimestamp($timestamp)
+  {
+    $this->source_timestamp = $timestamp;
   }
 }
