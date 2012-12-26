@@ -77,6 +77,7 @@ class WPLessCompiler extends lessc
 		// saving compiled stuff
 		if (isset($compiled_cache['compiled']) && $compiled_cache['compiled'])
 		{
+      $stylesheet->setSourceTimestamp($compiled_cache['updated']);
 			$this->saveStylesheet($stylesheet, $compiled_cache['compiled']);
 
 			$compiled_cache['compiled'] = NULL;
