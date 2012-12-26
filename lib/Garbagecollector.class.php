@@ -26,7 +26,7 @@ class WPLessGarbagecollector
 	public function clean()
 	{
 		$outdated_files = $this->getOutdatedFiles($this->configuration->getTtl());
-        $this->filterVersions($outdated_files);
+    $this->filterVersions($outdated_files);
 
 		if (!empty($outdated_files))
 		{
@@ -94,7 +94,7 @@ class WPLessGarbagecollector
         foreach ($groups as &$versions)
         {
             arsort($versions);
-            $chunks = array_chunk($versions, self::$COMPILED_VERSIONS);
+            $chunks = array_chunk($versions, self::$COMPILED_VERSIONS, true);
 
             if (!empty($chunks[0]))
             {
@@ -103,7 +103,7 @@ class WPLessGarbagecollector
         }
 
         // Returning the diff
-        return array_diff($outdated_files, $keep);
+        $outdated_files = array_diff($outdated_files, array_flip($keep));
     }
 
 	/**
