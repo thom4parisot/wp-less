@@ -52,6 +52,10 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 
 == Changelog ==
 
+= Version 1.5.2 =
+
+ * bug: fixed garbage collector again (([#20](https://github.com/oncletom/wp-less/issue/20))
+
 = Version 1.5.1 =
 
  * feature(beta): less stylesheets can be enqueued in `wp-admin`
