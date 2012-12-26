@@ -54,9 +54,9 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 
 = Version 1.5.2 =
 
- * bug: fixed garbage collector bug (([#28](https://github.com/oncletom/wp-less/issue/28))
- * bug: fixed cachebusting URI generation in deep mode (([#29](https://github.com/oncletom/wp-less/issue/29))
- * bug: fixed access to Plugin instance, matching the documentation (([#20](https://github.com/oncletom/wp-less/issue/20))
+ * bug: fixed garbage collector bug ([#28](https://github.com/oncletom/wp-less/issue/28))
+ * bug: fixed cachebusting URI generation in deep mode ([#29](https://github.com/oncletom/wp-less/issue/29))
+ * bug: fixed access to Plugin instance, matching the documentation ([#20](https://github.com/oncletom/wp-less/issue/20))
 
 = Version 1.5.1 =
 
