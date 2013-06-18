@@ -123,13 +123,13 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     protected function _filterStylesheetUri($matches)
     {
-        if (preg_match('#^(http|@|data:|/)#Ui', $matches['url'])) {
+        if (preg_match('#^(http|@|data:|/)#Ui', $matches[2])) {
             return $matches[0];
         }
 
         return sprintf('url(%s%s%1$s)',
-            $matches['quote'],
-            $this->_TmpBaseDir . '/' . $matches['url']
+            $matches[1],
+            $this->_TmpBaseDir . '/' . $matches[2]
         );
     }
 
