@@ -71,6 +71,8 @@ class WPLessCompiler extends lessc
 	{
 		$cache_name = 'wp_less_compiled_'.md5($stylesheet->getSourcePath());
 		$compiled_cache = get_transient($cache_name);
+		
+		if( !$force && !file_exists( $stylesheet->getTargetPath() ) ) $force = true;
 
 		$compiled_cache = $this->cachedCompile($compiled_cache ? $compiled_cache : $stylesheet->getSourcePath(), $force);
 
