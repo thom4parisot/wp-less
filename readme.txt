@@ -52,6 +52,12 @@ The sole requirement is to use WordPress API and LESS convention: the `.less` ex
 
 == Changelog ==
 
+= Version 1.5.4 =
+
+ * bug: fixed stylesheet URL computation ([#38](https://github.com/oncletom/wp-less/issue/38))
+ * bug: fixed cache-hit miss after stylesheet garbage collection ([#40](https://github.com/oncletom/wp-less/issue/40))
+ * added a CONTRIBUTORS file
+
 = Version 1.5.3 =
 
  * lessphp: updated to v0.3.9
