@@ -45,6 +45,7 @@ class WPLessGarbagecollector
 		$outdated = array();
 		$time = time();
 		$dir = new RecursiveDirectoryIterator($this->configuration->getUploadDir());
+        $dir->setFlags(RecursiveDirectoryIterator::SKIP_DOTS);
 
 		/*
 		 * Collecting CSS files
