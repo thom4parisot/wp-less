@@ -1,5 +1,22 @@
 <?php
-require dirname(__FILE__).'/vendor/lessphp/lessc.inc.php';
+$compiler = 'lessphp';
+if( defined('WP_LESS_COMPILER') ){
+	if( file_exists( WP_LESS_COMPILER ) ){
+		require WP_LESS_COMPILER;
+	}
+	else if( is_dir( WP_LESS_COMPILER ) && file_exists(WP_LESS_COMPILER.'/lessc.inc.php') ){
+		require WP_LESS_COMPILER.'/lessc.inc.php';
+	}
+	else if( WP_LESS_COMPILER == 'less.php' ){
+		require dirname(__FILE__).'/vendor/less.php/lessc.inc.php';
+	}
+	else {
+		throw new Exception('[wp-less] Invalid less compiler defined by WP_LESS_COMILER');
+	}
+}
+else {
+	require dirname(__FILE__).'/vendor/lessphp/lessc.inc.php';
+}
 
 /**
  * LESS compiler
