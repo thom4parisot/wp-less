@@ -1,5 +1,4 @@
 <?php
-$compiler = 'lessphp';
 if( defined('WP_LESS_COMPILER') ){
 	if( file_exists( WP_LESS_COMPILER ) ){
 		require WP_LESS_COMPILER;
