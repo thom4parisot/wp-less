@@ -32,28 +32,28 @@ class WPLessCompiler extends lessc
 	/**
 	 * Instantiate a compiler
 	 *
-   * @api
+   	 * @api
 	 * @see	lessc::__construct
 	 * @param $file	string [optional]	Additional file to parse
 	 */
 	public function __construct($file = null)
 	{
-  	do_action('wp-less_compiler_construct_pre', $this, $file);
+  		do_action('wp-less_compiler_construct_pre', $this, $file);
 		parent::__construct(apply_filters('wp-less_compiler_construct', $file));
 	}
 
-  /**
-   * Registers a set of functions
-   *
-   * @param array $functions
-   */
-  public function registerFunctions(array $functions = array())
-  {
-    foreach ($functions as $name => $args)
-    {
-      $this->registerFunction($name, $args['callback']);
-    }
-  }
+	/**
+   	* Registers a set of functions
+   	*
+   	* @param array $functions
+   	*/
+  	public function registerFunctions(array $functions = array())
+  	{
+  		foreach ($functions as $name => $args)
+  		{
+      			$this->registerFunction($name, $args['callback']);
+    		}
+  	}
 
 	/**
 	 * Returns available variables
@@ -95,7 +95,7 @@ class WPLessCompiler extends lessc
 		// saving compiled stuff
 		if (isset($compiled_cache['compiled']) && $compiled_cache['compiled'])
 		{
-      $stylesheet->setSourceTimestamp($compiled_cache['updated']);
+      			$stylesheet->setSourceTimestamp($compiled_cache['updated']);
 			$this->saveStylesheet($stylesheet, $compiled_cache['compiled']);
 
 			$compiled_cache['compiled'] = NULL;
