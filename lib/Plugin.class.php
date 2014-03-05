@@ -76,15 +76,19 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function install()
     {
-        // Check to see if it isn't scheduled first, for example
-        // this would occur when loaded via theme
+        /*
+         * Check to see if it isn't scheduled first, for example
+         * this would occur when loaded via theme
+         */
         if ( FALSE === wp_get_schedule( 'wp-less-garbage-collection' ) )
         {
             wp_schedule_event(time(), 'daily', 'wp-less-garbage-collection');
         }
 
-        // Clear old hooks, prior to hook change
-        // #57
+        /* 
+         * Clear old hooks, prior to hook change
+         * #57
+         */
         wp_clear_scheduled_hook( 'wp-less_garbage_collection' );
     }
 
