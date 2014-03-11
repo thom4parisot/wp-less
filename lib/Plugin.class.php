@@ -61,7 +61,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
          * Garbage Collection Registration
          */
         $gc = new WPLessGarbagecollector($this->configuration);
-        add_action('wp-less_garbage_collection', array($gc, 'clean'));
+        add_action('wp-less-garbage-collection', array($gc, 'clean'));
 
         /*
          * Last Hooks
@@ -76,7 +76,20 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function install()
     {
-        wp_schedule_event(time(), 'daily', 'wp-less_garbage_collection');
+        /*
+         * Check to see if it isn't scheduled first, for example
+         * this would occur when loaded via theme
+         */
+        if ( FALSE === wp_get_schedule( 'wp-less-garbage-collection' ) )
+        {
+            wp_schedule_event(time(), 'daily', 'wp-less-garbage-collection');
+        }
+
+        /* 
+         * Clear old hooks, prior to hook change
+         * #57
+         */
+        wp_clear_scheduled_hook( 'wp-less_garbage_collection' );
     }
 
     /**
@@ -86,7 +99,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function uninstall()
     {
-        wp_clear_scheduled_hook('wp-less_garbage_collection');
+        wp_clear_scheduled_hook('wp-less-garbage-collection');
     }
 
     /**
