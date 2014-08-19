@@ -76,9 +76,9 @@ class WPLessStylesheet
    * Since this moment, everything is configured to be usable
    *
    * @protected
-   * @author oncletom
+   * @author villeristi
    * @since 1.0
-   * @version 1.1
+   * @version 1.1.1
    */
   protected function configurePath()
   {
@@ -86,8 +86,8 @@ class WPLessStylesheet
 
     $this->source_path =    WP_CONTENT_DIR.preg_replace('#^'.content_url().'#U', '', $this->stylesheet->src);
     $this->source_uri =     $this->stylesheet->src;
-    $this->target_path =    self::$upload_dir.$target_file;
-    $this->target_uri =     self::$upload_uri.$target_file;
+    $this->target_path =    self::$upload_dir.'/'.basename($target_file);
+    $this->target_uri =     self::$upload_uri.'/'.basename($target_file);
 
     $this->setSourceTimestamp(filemtime($this->source_path));
   }
