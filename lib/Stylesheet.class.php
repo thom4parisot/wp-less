@@ -76,9 +76,9 @@ class WPLessStylesheet
    * Since this moment, everything is configured to be usable
    *
    * @protected
-   * @author oncletom
+   * @author villeristi
    * @since 1.0
-   * @version 1.1
+   * @version 1.1.1
    */
   protected function configurePath()
   {
