@@ -1,6 +1,0 @@
-[submodule "lib/vendor/lessphp"]
-	path = lib/vendor/lessphp
-	url = https://github.com/leafo/lessphp.git
-[submodule "lib/vendor/less.php"]
-	path = lib/vendor/less.php
-	url = git://github.com/oyejorge/less.php

@@ -1,0 +1,17 @@
+{
+    "name": "oncletom/wp-less",
+    "require": {
+        "oyejorge/less.php": "1.7",
+        "leafo/lessphp": "0.4.0"
+    },
+    "require": {
+      "PHP" : ">=5.2.4"
+    },
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "oncletom",
+            "email": "hi@oncletom.io"
+        }
+    ]
+}

@@ -7,14 +7,14 @@ if( defined('WP_LESS_COMPILER') ){
 		require WP_LESS_COMPILER.'/lessc.inc.php';
 	}
 	else if( WP_LESS_COMPILER == 'less.php' ){
-		require dirname(__FILE__).'/vendor/less.php/lessc.inc.php';
+		require dirname(__FILE__).'/../vendor/oyejorge/less.php/lessc.inc.php';
 	}
 	else {
 		throw new Exception('[wp-less] Invalid less compiler defined by WP_LESS_COMILER');
 	}
 }
 else {
-	require dirname(__FILE__).'/vendor/lessphp/lessc.inc.php';
+	require dirname(__FILE__).'/../vendor/leafo/lessphp/lessc.inc.php';
 }
 
 /**
@@ -87,7 +87,7 @@ class WPLessCompiler extends lessc
 	{
 		$cache_name = 'wp_less_compiled_'.md5($stylesheet->getSourcePath());
 		$compiled_cache = get_transient($cache_name);
-		
+
 		if( !$force && !file_exists( $stylesheet->getTargetPath() ) ) $force = true;
 
 		$compiled_cache = $this->cachedCompile($compiled_cache ? $compiled_cache : $stylesheet->getSourcePath(), $force);
