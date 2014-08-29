@@ -1,3 +1,5 @@
 *.idea
-.git*
-lib/vendor/lessphp/.git
+.git
+*.lock
+tests
+test
