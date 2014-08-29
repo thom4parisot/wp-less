@@ -68,6 +68,13 @@ Warning: this release has some breaking changes. If you the old selector express
 
 == Changelog ==
 
+= Version 1.7.0 =
+
+ * feature: ability to provide your own flavour of `lessphp` or `less.php` ([#53](https://github.com/oncletom/wp-less/pull/53))
+ * bug: fixed stylesheet directory computation ([#61](https://github.com/oncletom/wp-less/pull/61))
+ * bug: unlink exception during utpdated files cleanup ([#49](https://github.com/oncletom/wp-less/pull/49))
+ * style: code cleanup ([#56](https://github.com/oncletom/wp-less/pull/56), [#55](https://github.com/oncletom/wp-less/pull/55))
+
 = Version 1.6.0 =
 
 Read the UPGRADE NOTICE carefully as this release contains BC change. Hence the version bump to `1.6.0`.
