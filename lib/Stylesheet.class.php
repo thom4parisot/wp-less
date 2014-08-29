@@ -86,8 +86,8 @@ class WPLessStylesheet
 
     $this->source_path =    WP_CONTENT_DIR.preg_replace('#^'.content_url().'#U', '', $this->stylesheet->src);
     $this->source_uri =     $this->stylesheet->src;
-    $this->target_path =    self::$upload_dir.'/'.basename($target_file);
-    $this->target_uri =     self::$upload_uri.'/'.basename($target_file);
+    $this->target_path =    trailingslashit(self::$upload_dir) . basename($target_file);
+    $this->target_uri =     trailingslashit(self::$upload_uri) . .basename($target_file);
 
     $this->setSourceTimestamp(filemtime($this->source_path));
   }
