@@ -1,22 +1,4 @@
 <?php
-if( defined('WP_LESS_COMPILER') ){
-	if( file_exists( WP_LESS_COMPILER ) ){
-		require WP_LESS_COMPILER;
-	}
-	else if( is_dir( WP_LESS_COMPILER ) && file_exists(WP_LESS_COMPILER.'/lessc.inc.php') ){
-		require WP_LESS_COMPILER.'/lessc.inc.php';
-	}
-	else if( WP_LESS_COMPILER == 'less.php' ){
-		require dirname(__FILE__).'/../vendor/oyejorge/less.php/lessc.inc.php';
-	}
-	else {
-		throw new Exception('[wp-less] Invalid less compiler defined by WP_LESS_COMILER');
-	}
-}
-else {
-	require dirname(__FILE__).'/../vendor/leafo/lessphp/lessc.inc.php';
-}
-
 /**
  * LESS compiler
  *
@@ -51,8 +33,8 @@ class WPLessCompiler extends lessc
   	{
   		foreach ($functions as $name => $args)
   		{
-      			$this->registerFunction($name, $args['callback']);
-    		}
+			$this->registerFunction($name, $args['callback']);
+		}
   	}
 
 	/**

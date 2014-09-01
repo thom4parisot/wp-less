@@ -39,10 +39,48 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     public function __construct(WPLessConfiguration $configuration)
     {
         parent::__construct($configuration);
-
+        add_action('init', array(&$this, 'instantiate_compiler'), 1);
+    }
+    
+    public function instantiate_compiler()
+    {
+        // Load the parent compiler class
+        $this->load_lessc();
+        
         $this->compiler = new WPLessCompiler;
         $this->compiler->setVariable('stylesheet_directory_uri', "'" . get_stylesheet_directory_uri() . "'");
         $this->compiler->setVariable('template_directory_uri', "'" . get_template_directory_uri() . "'");
+    }
+    
+    /**
+     * Load the parent compiler class. This is provided via lessc.inc.php for
+     * both the lessphp and less.php implementations
+     *
+     * @author  fabrizim
+     * @since   1.7.1
+     *
+     */
+    protected function load_lessc()
+    {
+        // The usage of the WP_LESS_COMPILER is a holdover from an older implentation
+        // of this opt-in functionality
+        $compiler = defined('WP_LESS_COMPILER') ? WP_LESS_COMPILER : apply_filters('wp_less_compiler', 'lessphp');
+        
+        if( file_exists( WP_LESS_COMPILER ) ){
+            require $compiler;
+        }
+        else if( is_dir( $compiler ) && file_exists($compiler.'/lessc.inc.php') ){
+            require $compiler.'/lessc.inc.php';
+        }
+        else if( 'less.php' === $compiler ){
+            require dirname(__FILE__).'/vendor/less.php/lessc.inc.php';
+        }
+        else if( $compiler && 'lessphp' !== $compiler ){
+            throw new Exception('[wp-less] Invalid less compiler');
+        }
+        else {
+            require dirname(__FILE__).'/vendor/lessphp/lessc.inc.php';
+        }
     }
 
     /**
