@@ -39,10 +39,41 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     public function __construct(WPLessConfiguration $configuration)
     {
         parent::__construct($configuration);
-
+        add_action('init', array(&$this, 'instantiateCompiler'), 1);
+    }
+    
+    public function instantiateCompiler()
+    {
+        // Load the parent compiler class
+        require $this->getLessCompilerPath();
+        
         $this->compiler = new WPLessCompiler;
         $this->compiler->setVariable('stylesheet_directory_uri', "'" . get_stylesheet_directory_uri() . "'");
         $this->compiler->setVariable('template_directory_uri', "'" . get_template_directory_uri() . "'");
+    }
+    
+    /**
+     * Load the parent compiler class. This is provided via lessc.inc.php for
+     * both the lessphp and less.php implementations
+     *
+     * @author  fabrizim
+     * @since   1.7.1
+     *
+     */
+    protected function getLessCompilerPath()
+    {
+        // The usage of the WP_LESS_COMPILER is a holdover from an older implentation
+        // of this opt-in functionality
+        $compiler = defined('WP_LESS_COMPILER') ? WP_LESS_COMPILER : apply_filters('wp_less_compiler', 'lessphp');
+        
+        switch( $compiler ){
+            case 'less.php':
+                return dirname(__FILE__).'/../vendor/oyejorge/less.php/lessc.inc.php';
+            case 'lessphp':
+                return dirname(__FILE__).'/../vendor/leafo/lessphp/lessc.inc.php';
+            default:
+                return $compiler;
+        }
     }
 
     /**
