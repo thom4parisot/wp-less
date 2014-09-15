@@ -39,7 +39,6 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     public function __construct(WPLessConfiguration $configuration)
     {
         parent::__construct($configuration);
-        add_action('init', array(&$this, 'instantiateCompiler'), 1);
     }
     
     public function instantiateCompiler()
@@ -74,6 +73,13 @@ class WPLessPlugin extends WPPluginToolkitPlugin
             default:
                 return $compiler;
         }
+    }
+    
+    public function getCompiler()
+    {
+        if( $this->compiler ) return $this->compiler;
+        $this->instantiateCompiler();
+        return $this->compiler;
     }
 
     /**
@@ -235,9 +241,9 @@ class WPLessPlugin extends WPPluginToolkitPlugin
         $stylesheet = new WPLessStylesheet($wp_styles->registered[$handle], $this->compiler->getVariables());
 
         if ($this->configuration->getCompilationStrategy() === 'legacy' && $stylesheet->hasToCompile()) {
-            $this->compiler->saveStylesheet($stylesheet);
+            $this->getCompiler()->saveStylesheet($stylesheet);
         } elseif ($this->configuration->getCompilationStrategy() !== 'legacy') {
-            $this->compiler->cacheStylesheet($stylesheet, $force);
+            $this->getCompiler()->cacheStylesheet($stylesheet, $force);
         }
 
         $wp_styles->registered[$handle]->src = $stylesheet->getTargetUri();
@@ -305,7 +311,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function addVariable($name, $value)
     {
-        $this->compiler->setVariables(array($name => $value));
+        $this->getCompiler()->setVariables(array($name => $value));
     }
 
     /**
@@ -316,7 +322,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function setVariables(array $variables)
     {
-        $this->compiler->setVariables($variables);
+        $this->getCompiler()->setVariables($variables);
     }
 
     /**
@@ -327,7 +333,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function registerFunction($name, $callback)
     {
-        $this->compiler->registerFunction($name, $callback);
+        $this->getCompiler()->registerFunction($name, $callback);
     }
 
     /**
@@ -338,7 +344,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function unregisterFunction($name)
     {
-        $this->compiler->unregisterFunction($name);
+        $this->getCompiler()->unregisterFunction($name);
     }
 
     /**
@@ -350,7 +356,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function getImportDir()
     {
-        return $this->compiler->getImportDir();
+        return $this->getCompiler()->getImportDir();
     }
 
     /**
@@ -362,7 +368,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function addImportDir($dir)
     {
-        $this->compiler->addImportDir($dir);
+        $this->getCompiler()->addImportDir($dir);
     }
 
     /**
@@ -374,6 +380,6 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function setImportDir($dirs)
     {
-        $this->compiler->setImportDir($dirs);
+        $this->getCompiler()->setImportDir($dirs);
     }
 }
