@@ -238,7 +238,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
         $force = !!$force ? $force : $this->configuration->alwaysRecompile();
 
         $wp_styles = $this->getStyles();
-        $stylesheet = new WPLessStylesheet($wp_styles->registered[$handle], $this->compiler->getVariables());
+        $stylesheet = new WPLessStylesheet($wp_styles->registered[$handle], $this->getCompiler()->getVariables());
 
         if ($this->configuration->getCompilationStrategy() === 'legacy' && $stylesheet->hasToCompile()) {
             $this->getCompiler()->saveStylesheet($stylesheet);
