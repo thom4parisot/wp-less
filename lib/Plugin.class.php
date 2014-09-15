@@ -43,8 +43,10 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     
     public function instantiateCompiler()
     {
-        // Load the parent compiler class
-        require $this->getLessCompilerPath();
+        if (!class_exists('lessc')) {
+            // Load the parent compiler class
+            require $this->getLessCompilerPath();
+        }
         
         $this->compiler = new WPLessCompiler;
         $this->compiler->setVariable('stylesheet_directory_uri', "'" . get_stylesheet_directory_uri() . "'");
