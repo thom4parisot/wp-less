@@ -68,6 +68,11 @@ Warning: this release has some breaking changes. If you the old selector express
 
 == Changelog ==
 
+= Version 1.7.3 =
+
+ * bug: fixed the LESS library loading ([#63](https://github.com/oncletom/wp-less/issues/63))
+ * doc: documented the new LESS library swapping
+
 = Version 1.7.0 =
 
  * feature: ability to provide your own flavour of `lessphp` or `less.php` ([#53](https://github.com/oncletom/wp-less/pull/53))
