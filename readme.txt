@@ -68,6 +68,10 @@ Warning: this release has some breaking changes. If you the old selector express
 
 == Changelog ==
 
+= Version 1.7.4 =
+
+ * feature: favour composer autoload to manual PHP `require` ([#64](https://github.com/oncletom/wp-less/pull/64))
+
 = Version 1.7.3 =
 
  * bug: fixed the LESS library loading ([#63](https://github.com/oncletom/wp-less/issues/63))
