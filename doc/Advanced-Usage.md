@@ -77,3 +77,26 @@ if (class_exists('WPLessPlugin')){
 	$lessConfig->setUploadUrl(get_stylesheet_directory_uri() . '/compiled-css');
 }
 ```
+## Changing the less compiler
+
+By default `wp-less` will use the compiler from the [leafo/lessphp](https://github.com/leafo/lessphp) library. wp-less also ships with the [oyejorge/less.php](https://github.com/oyejorge/less.php) library, which is more up-to-date and contains the ":extend" less language construct (which is needed for the compilation of certain frameworks including the latest Twitter Bootstrap).
+
+__Note__ The `less.php` library does not support registering custom php functions.
+
+If you would like to change the compiler, you can use the `wp_less_compiler` filter. The returned value can be either:
+* "lessphp" (Default)
+* "less.php"
+* Path to a file containing a class named "lessc" (see the less.php [`lessc.inc.php`](https://github.com/oyejorge/less.php/blob/master/lessc.inc.php) for an example of what needs to be defined).
+
+### Example using the less.php library
+```php
+// wp-content/themes/your-theme/functions.php
+
+if (class_exists('WPLessPlugin')){
+	function my_theme_wp_less_compiler()
+	{
+		return 'less.php';
+	}
+	add_filter('wp_less_compiler', 'my_theme_wp_less_compiler');
+}
+```
