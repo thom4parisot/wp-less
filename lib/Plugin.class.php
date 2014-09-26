@@ -69,9 +69,9 @@ class WPLessPlugin extends WPPluginToolkitPlugin
         
         switch( $compiler ){
             case 'less.php':
-                return dirname(__FILE__).'/../vendor/oyejorge/less.php/lessc.inc.php';
+                return dirname(__FILE__).'/vendor/oyejorge/less.php/lessc.inc.php';
             case 'lessphp':
-                return dirname(__FILE__).'/../vendor/leafo/lessphp/lessc.inc.php';
+                return dirname(__FILE__).'/vendor/leafo/lessphp/lessc.inc.php';
             default:
                 return $compiler;
         }
