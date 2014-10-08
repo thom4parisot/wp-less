@@ -10,7 +10,7 @@ class WPLessConfiguration extends WPPluginToolkitConfiguration
   /**
    * Refers to the version of the plugin
    */
-  const VERSION =   '1.7.4';
+  const VERSION =   '1.7.5';
 
 
 

@@ -68,6 +68,10 @@ Warning: this release has some breaking changes. If you the old selector express
 
 == Changelog ==
 
+= Version 1.7.5 =
+
+ * feature: now works properly in the admin side ([#68](https://github.com/oncletom/wp-less/pull/68))
+
 = Version 1.7.4 =
 
  * feature: favour composer autoload to manual PHP `require` ([#64](https://github.com/oncletom/wp-less/pull/64))
