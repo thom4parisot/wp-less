@@ -300,6 +300,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 
         is_admin() ? do_action('wp-less_init_admin', $this) : do_action('wp-less_init', $this);
         add_action('wp_enqueue_scripts', array($this, 'processStylesheets'), 999, 0);
+        add_action('admin_enqueue_scripts', array($this, 'processStylesheets'), 999, 0);
         add_filter('wp-less_stylesheet_save', array($this, 'filterStylesheetUri'), 10, 2);
 
         return $this->is_hooks_registered = true;
