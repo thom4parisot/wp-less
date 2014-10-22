@@ -283,6 +283,59 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 
         do_action('wp-less_plugin_process_stylesheets', $styles);
     }
+    
+    /**
+     * Compile editor stylesheets registered via add_editor_style()
+     *
+     * @param  string $mce_css Comma separated list of CSS file URLs
+     * @return string $mce_css New comma separated list of CSS file URLs
+     */
+    public function processEditorStylesheets($mce_css) {
+
+        WPLessStylesheet::$upload_dir = $this->configuration->getUploadDir();
+        WPLessStylesheet::$upload_uri = $this->configuration->getUploadUrl();
+
+        // extract CSS file URLs
+        $style_sheets = explode( ",", $mce_css );
+
+        if ( count( $style_sheets ) ) {
+            $compiled_css = array();
+
+            // loop through editor styles, any .less files will be compiled and the compiled URL returned
+            foreach( $style_sheets as $style_sheet ) {
+                
+                // Remove version from uri
+                $parts = explode('?', $style_sheet );
+                $style_sheet = $parts[0];
+
+                // Get extension and set handle for wp_register_style()
+                $pathinfo = pathinfo($style_sheet);
+                $extension = $pathinfo['extension'];
+                $handle = $pathinfo['filename'];
+
+                // Only process less files
+                if( $extension == 'less' ) {
+                    
+                    // Register stylesheet as wp dependency
+                    wp_register_style( $handle, $style_sheet, array(), null );
+                    
+                    // Process stylesheet
+                    $stylesheet = $this->processStylesheet($handle, false);
+                    
+                    // Add if successfull
+                    if($stylesheet) {
+                        $compiled_css[] = $stylesheet->getTargetUri();
+                    }
+                    
+                }
+            }
+
+            $mce_css = implode( ",", $compiled_css );
+        }
+
+        // return new URLs
+        return $mce_css;
+    }
 
     /**
      * Method to register hooks (and do it only once)
@@ -301,6 +354,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
         is_admin() ? do_action('wp-less_init_admin', $this) : do_action('wp-less_init', $this);
         add_action('wp_enqueue_scripts', array($this, 'processStylesheets'), 999, 0);
         add_action('admin_enqueue_scripts', array($this, 'processStylesheets'), 999, 0);
+        add_filter('mce_css', array($this, 'processEditorStylesheets'), 999);
         add_filter('wp-less_stylesheet_save', array($this, 'filterStylesheetUri'), 10, 2);
 
         return $this->is_hooks_registered = true;
