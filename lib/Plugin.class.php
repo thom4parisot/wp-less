@@ -292,9 +292,6 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      */
     public function processEditorStylesheets($mce_css) {
 
-        WPLessStylesheet::$upload_dir = $this->configuration->getUploadDir();
-        WPLessStylesheet::$upload_uri = $this->configuration->getUploadUrl();
-
         // extract CSS file URLs
         $style_sheets = explode( ",", $mce_css );
 
