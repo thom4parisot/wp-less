@@ -311,7 +311,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
                 $handle = $pathinfo['filename'];
 
                 // Only process less files
-                if( $extension == 'less' ) {
+                if( $extension === 'less' ) {
                     
                     // Register stylesheet as wp dependency
                     wp_register_style( $handle, $style_sheet, array(), null );
