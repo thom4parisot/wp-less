@@ -302,8 +302,8 @@ class WPLessPlugin extends WPPluginToolkitPlugin
             foreach( $style_sheets as $style_sheet ) {
                 
                 // Remove version from uri
-                $parts = explode('?', $style_sheet );
-                $style_sheet = $parts[0];
+                $parts = parse_url( $style_sheet );
+                $style_sheet = $parts['scheme'] . '://' . $parts['host'] . $parts['path'];
 
                 // Get extension and set handle for wp_register_style()
                 $pathinfo = pathinfo($style_sheet);
