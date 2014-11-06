@@ -325,6 +325,10 @@ class WPLessPlugin extends WPPluginToolkitPlugin
                     }
                     
                 }
+                
+                else {
+                    $compiled_css[] = $style_sheet;
+                }
             }
 
             $mce_css = implode( ",", $compiled_css );
