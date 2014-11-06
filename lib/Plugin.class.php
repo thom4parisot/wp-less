@@ -291,6 +291,8 @@ class WPLessPlugin extends WPPluginToolkitPlugin
      * @return string $mce_css New comma separated list of CSS file URLs
      */
     public function processEditorStylesheets($mce_css) {
+        
+        if( !$mce_css ) return $mce_css;
 
         // extract CSS file URLs
         $style_sheets = explode( ",", $mce_css );
