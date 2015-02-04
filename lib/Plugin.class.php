@@ -326,6 +326,8 @@ class WPLessPlugin extends WPPluginToolkitPlugin
                         $compiled_css[] = $stylesheet->getTargetUri();
                     }
                     
+                } elseif( $extension === 'css' ) {
+                    $compiled_css[] = $style_sheet;
                 }
                 
                 else {
