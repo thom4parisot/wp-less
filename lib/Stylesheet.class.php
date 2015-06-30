@@ -95,7 +95,7 @@ class WPLessStylesheet
   /**
    * Configures the file signature
    *
-   * It corresponds to a unique hash taking care of file timestamp and variables.
+   * It corresponds to a unique hash taking care of file name, timestamp and variables.
    * It should be called each time stylesheet variables are updated.
    *
    * @author oncletom
@@ -105,7 +105,7 @@ class WPLessStylesheet
    */
   protected function configureSignature(array $variables = array())
   {
-    $this->signature = substr(sha1(serialize($variables) . $this->source_timestamp), 0, 10);
+    $this->signature = substr(sha1(serialize($variables) . $this->computeTargetPath() . $this->source_timestamp), 0, 10);
   }
 
   /**
