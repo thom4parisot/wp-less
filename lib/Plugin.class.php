@@ -65,7 +65,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     {
         // The usage of the WP_LESS_COMPILER is a holdover from an older implentation
         // of this opt-in functionality
-        $compiler = defined('WP_LESS_COMPILER') ? WP_LESS_COMPILER : apply_filters('wp_less_compiler', 'lessphp');
+        $compiler = defined('WP_LESS_COMPILER') ? WP_LESS_COMPILER : apply_filters('wp_less_compiler', 'less.php');
 
         switch( $compiler ){
             case 'less.php':
