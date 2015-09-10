@@ -33,8 +33,8 @@ Advanced topics on how to use the plugin API are [available on the Github projec
 
 The sole requirement is to use WordPress API and LESS convention: the `.less` extension.
 
-**Minimal Requirements**: PHP 5.2.4 and WordPress 3.2.
-**Relies on**: [LESSPHP 0.4.0](http://leafo.net/lessphp/), [plugin-toolkit](http://wordpress.org/extend/plugins/plugin-toolkit/).
+**Minimal Requirements**: PHP 5.3 and WordPress 3.2.
+**Relies on**: [Less.php](http://lessphp.gpeasy.com/), [plugin-toolkit](http://wordpress.org/extend/plugins/plugin-toolkit/).
 
 *Notice*: in case you'd like to drop the usage of this plugin, it's safe to do it. You will just need to convert back your stylesheets to CSS.
 
@@ -67,6 +67,10 @@ Warning: this release has some breaking changes. If you the old selector express
  * Duplicate properties are now removed from output
 
 == Changelog ==
+
+= Version 1.8.0 =
+
+ * feature: default less compiler is now [oyejorge/less.php](http://lessphp.gpeasy.com/) ([#90](https://github.com/oncletom/wp-less/pull/68))
 
 = Version 1.7.6 =
 
