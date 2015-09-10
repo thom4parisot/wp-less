@@ -100,3 +100,12 @@ if (class_exists('WPLessPlugin')){
 	add_filter('wp_less_compiler', 'my_theme_wp_less_compiler');
 }
 ```
+
+## Make Less output minified
+``` php
+// wp-content/themes/your-theme/functions.php
+
+add_action('wp-less_init', function($WPLess) {
+  $WPLess->getCompiler()->setFormatter('compressed');
+} );
+```
