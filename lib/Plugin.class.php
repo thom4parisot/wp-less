@@ -305,7 +305,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 
                 // Remove version from uri
                 $parts = parse_url( $style_sheet );
-                $style_sheet = $parts['scheme'] . '://' . $parts['host'] . (!$parts['port'] ?: ':' . $parts['port']) .  $parts['path'];
+                $style_sheet = $parts['scheme'] . '://' . $parts['host'] . (!$parts['port'] ? '' : (':' . $parts['port'])) .  $parts['path'];
 
                 // Get extension and set handle for wp_register_style()
                 $pathinfo = pathinfo($style_sheet);
