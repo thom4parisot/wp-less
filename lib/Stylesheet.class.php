@@ -76,15 +76,17 @@ class WPLessStylesheet
    * Since this moment, everything is configured to be usable
    *
    * @protected
-   * @author oncletom
+   * @author oncletom, schnoggo
    * @since 1.0
-   * @version 1.1
+   * @version 1.2
    */
   protected function configurePath()
   {
     $target_file =          $this->computeTargetPath();
-
-    $this->source_path =    WP_CONTENT_DIR.preg_replace('#^'.content_url().'#U', '', $this->stylesheet->src);
+    // path to local "wp-content" dir does not match URI in multisite.
+	$wp_content_dir = str_replace(ABSPATH, '', WP_CONTENT_DIR); // get the 'wp-content' part of the path
+	$lessfile_in_theme = preg_replace ('#^.*?' . DIRECTORY_SEPARATOR . $wp_content_dir . DIRECTORY_SEPARATOR . '(.*)$#', '$1', $this->stylesheet->src, 1); // the part after 'wp-content'
+	$this->source_path = WP_CONTENT_DIR  . DIRECTORY_SEPARATOR . $lessfile_in_theme;
     $this->source_uri =     $this->stylesheet->src;
     $this->target_path =    self::$upload_dir.$target_file;
     $this->target_uri =     self::$upload_uri.$target_file;
