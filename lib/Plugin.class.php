@@ -39,6 +39,8 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     public function __construct(WPLessConfiguration $configuration)
     {
         parent::__construct($configuration);
+        WPLessStylesheet::$upload_dir = $this->configuration->getUploadDir();
+        WPLessStylesheet::$upload_uri = $this->configuration->getUploadUrl();
     }
 
     public function instantiateCompiler()
@@ -265,9 +267,6 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     {
         $styles = $this->getQueuedStylesToProcess();
         $force = is_bool($force) && $force ? !!$force : false;
-
-        WPLessStylesheet::$upload_dir = $this->configuration->getUploadDir();
-        WPLessStylesheet::$upload_uri = $this->configuration->getUploadUrl();
 
         if (empty($styles)) {
             return;
