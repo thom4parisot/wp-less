@@ -11,13 +11,13 @@ Plugin URI: http://wordpress.org/extend/plugins/wp-less/
   http://www.opensource.org/licenses/gpl-3.0.html
 */
 
-if (!class_exists('WPLessPlugin'))
+if (!class_exists('WPLessPluginLoader'))
 {
-	require dirname(__FILE__).'/lib/Plugin.class.php';
-	$WPLessPlugin = WPPluginToolkitPlugin::create('WPLess', __FILE__, 'WPLessPlugin');
+	require dirname(__FILE__).'/lib/Loader.class.php';
+	$WPLessPlugin = WPLessPluginLoader::load(function($WPLessPlugin) {
+		register_activation_hook(__FILE__, array($WPLessPlugin, 'install'));
+		register_deactivation_hook(__FILE__, array($WPLessPlugin, 'uninstall'));
 
-	register_activation_hook(__FILE__, array($WPLessPlugin, 'install'));
-	register_deactivation_hook(__FILE__, array($WPLessPlugin, 'uninstall'));
-
-	$WPLessPlugin->dispatch();
+		$WPLessPlugin->dispatch();
+	});
 }
