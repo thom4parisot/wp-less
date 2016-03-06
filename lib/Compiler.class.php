@@ -11,6 +11,24 @@
  */
 class WPLessCompiler extends lessc
 {
+
+        private $compilerOpts = [
+            'sourceMap'             => false,// whether to output a source map
+            'sourceMapBasepath'     => null,
+            'sourceMapWriteTo'      => null,
+            'sourceMapURL'          => null,
+        ];
+
+        protected function setOptions(array $opts){
+            $this->compilerOpts = $opts;
+        }
+
+    	protected function getOptions(){
+		$lesscOptions = parent::getOptions();
+                $options = array_merge($lesscOptions, $this->compilerOpts);
+		return $options;
+	}
+
 	/**
 	 * Instantiate a compiler
 	 *
@@ -71,6 +89,17 @@ class WPLessCompiler extends lessc
 		$compiled_cache = get_transient($cache_name);
 
 		if( !$force && !file_exists( $stylesheet->getTargetPath() ) ) $force = true;
+                wp_mkdir_p(dirname($stylesheet->getTargetPath()));
+
+                if(defined('WP_DEBUG') && WP_DEBUG) {
+                    $this->setOptions([
+                        'sourceMap'             => true,// whether to output a source map
+                        'sourceMapBasepath'     => get_template_directory(),
+                        'sourceMapRootpath'     => get_template_directory_uri(),
+                        'sourceMapWriteTo'      => $stylesheet->getTargetMapPath(),
+                        'sourceMapURL'          => $stylesheet->getTargetMapUri(),
+                    ]);
+                }
 
 		$compiled_cache = $this->cachedCompile($compiled_cache ? $compiled_cache : $stylesheet->getSourcePath(), $force);
 
@@ -104,6 +133,15 @@ class WPLessCompiler extends lessc
 
 			if ($css === null)
 			{
+                                if(defined('WP_DEBUG') && WP_DEBUG) {
+                                    $this->setOptions([
+                                        'sourceMap'             => true,// whether to output a source map
+                                        'sourceMapBasepath'     => get_template_directory(),
+                                        'sourceMapRootpath'     => get_template_directory_uri(),
+                                        'sourceMapWriteTo'      => $stylesheet->getTargetMapPath(),
+                                        'sourceMapURL'          => $stylesheet->getTargetMapUri(),
+                                    ]);
+                                }
 				$css = $this->compileFile($stylesheet->getSourcePath());
 			}
 
