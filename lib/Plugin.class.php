@@ -359,6 +359,10 @@ class WPLessPlugin extends WPPluginToolkitPlugin
         add_action('login_enqueue_scripts', array($this, 'processStylesheets'), PHP_INT_MAX, 0);
         add_filter('mce_css', array($this, 'processEditorStylesheets'), PHP_INT_MAX);
         add_filter('wp-less_stylesheet_save', array($this, 'filterStylesheetUri'), 10, 2);
+        add_filter('wp_theme_editor_filetypes', function($types) {
+            $types[] = 'less';
+            return $types;
+        });
 
         return $this->is_hooks_registered = true;
     }
