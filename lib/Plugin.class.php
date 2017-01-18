@@ -53,7 +53,7 @@ class WPLessPlugin extends WPPluginToolkitPlugin
         $this->compiler = new WPLessCompiler;
         $this->compiler->setVariable('stylesheet_directory_uri', "'" . get_stylesheet_directory_uri() . "'");
         $this->compiler->setVariable('template_directory_uri', "'" . get_template_directory_uri() . "'");
-        if(!WP_DEBUG) { $this->compiler->setFormatter('compressed'); }
+        if(!defined('WP_DEBUG') || !WP_DEBUG) { $this->compiler->setFormatter('compressed'); }
     }
 
     /**
