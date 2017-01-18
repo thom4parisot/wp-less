@@ -11,7 +11,7 @@ The default values of `wp-less` **already take care about server overhead**, bro
 Just like you would add a CSS stylesheet in Wordpress using Wordpress' built-in function [`wp_enqueue_style`](http://codex.wordpress.org/Function_Reference/wp_enqueue_style) you can now also add your LESS stylesheets using this function. This function can only be called upon in your theme's [`functions.php`](http://codex.wordpress.org/Theme_Development#Functions_File). Register your LESS stylesheets as following:
 
 ```php
-add_action('init', 'theme_enqueue_styles');
+add_action('wp_enqueue_scripts', 'theme_enqueue_styles');
 
 function theme_enqueue_styles() {
 	wp_enqueue_style('theme-main', get_stylesheet_directory_uri().'/stylesheets/theme-main.less');
