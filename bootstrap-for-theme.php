@@ -36,15 +36,16 @@
  * This will be effective only if the plugin is not activated.
  * You can then redistribute your theme with this loader fearlessly.
  */
-if (!class_exists('WPLessPlugin'))
+if (!class_exists('WPLessPluginLoader'))
 {
-  require dirname(__FILE__).'/lib/Plugin.class.php';
-  $WPLessPlugin = WPPluginToolkitPlugin::create('WPLess', __FILE__, 'WPLessPlugin');
+  require dirname(__FILE__).'/lib/Loader.class.php';
+  $WPLessPlugin = WPLessPluginLoader::load(function($WPLessPlugin) {
 
-	//READY and WORKING
-	//add_action('after_setup_theme', array($WPLessPlugin, 'install'));
+    //READY and WORKING
+    //add_action('after_setup_theme', array($WPLessPlugin, 'install'));
 
-	// NOT WORKING
-	//@see http://core.trac.wordpress.org/ticket/14955
-	//add_action('uninstall_theme', array($WPLessPlugin, 'uninstall'));
+    // NOT WORKING
+    //@see http://core.trac.wordpress.org/ticket/14955
+    //add_action('uninstall_theme', array($WPLessPlugin, 'uninstall'));
+  });
 }
