@@ -67,13 +67,15 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     {
         // The usage of the WP_LESS_COMPILER is a holdover from an older implentation
         // of this opt-in functionality
-        $compiler = defined('WP_LESS_COMPILER') ? WP_LESS_COMPILER : apply_filters('wp_less_compiler', 'less.php');
+        $compiler = defined('WP_LESS_COMPILER') ? WP_LESS_COMPILER : apply_filters('wp_less_compiler', 'wikimedia/less.php');
 
         switch( $compiler ){
             case 'less.php':
                 return dirname(__FILE__).'/../vendor/oyejorge/less.php/lessc.inc.php';
             case 'lessphp':
                 return dirname(__FILE__).'/../vendor/leafo/lessphp/lessc.inc.php';
+            case 'wikimedia/less.php':
+                return dirname(__FILE__).'/../vendor/wikimedia/less.php/lessc.inc.php';
             default:
                 return $compiler;
         }

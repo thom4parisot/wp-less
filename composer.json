@@ -2,7 +2,8 @@
     "name": "oncletom/wp-less",
     "require": {
         "oyejorge/less.php": "~1.7",
-        "leafo/lessphp": "~0.5"
+        "leafo/lessphp": "~0.5",
+        "wikimedia/less.php" : "~3.1"
     },
     "autoload": {
       "classmap": ["lib/"]
@@ -12,6 +13,10 @@
         {
             "name": "oncletom",
             "email": "hi@oncletom.io"
+        },
+        {
+            "name": "pixelbart",
+            "email": "me@pixelbart.de"
         }
     ]
 }
