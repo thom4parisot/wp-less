@@ -68,6 +68,10 @@ Warning: this release has some breaking changes. If you the old selector express
 
 == Changelog ==
 
+= Version 1.9.0 =
+
+* feature: default less compiler is now [wikimedia/less.php](https://github.com/wikimedia/less.php)
+
 = Version 1.8.0 =
 
  * feature: default less compiler is now [oyejorge/less.php](http://lessphp.gpeasy.com/) ([#90](https://github.com/oncletom/wp-less/pull/90)
