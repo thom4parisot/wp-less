@@ -2,6 +2,9 @@ name: Deploy to wordress.org
 
 on:
   push:
+  release:
+    types:
+      - published
 
 jobs:
   publish:
