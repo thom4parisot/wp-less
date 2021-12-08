@@ -82,6 +82,11 @@ class WPLessGarbagecollector
             {
                 continue;
             }
+		
+            if (!isset($m['group']))
+            {
+                continue;
+            }
 
             if (!isset($groups[ $m['group'] ]))
             {
