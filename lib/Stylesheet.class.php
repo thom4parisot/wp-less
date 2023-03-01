@@ -68,6 +68,8 @@ class WPLessStylesheet
 
     $target_path .= '-%s.css';
 
+    $target_path = str_replace(content_url(), '', $target_path);
+
     return apply_filters('wp-less_stylesheet_compute_target_path', $target_path);
   }
 
@@ -83,10 +85,10 @@ class WPLessStylesheet
   protected function configurePath()
   {
     $target_file =          $this->computeTargetPath();
-    // path to local "wp-content" dir does not match URI in multisite.
-	$wp_content_dir = str_replace(ABSPATH, '', WP_CONTENT_DIR); // get the 'wp-content' part of the path
-	$lessfile_in_theme = preg_replace ('#^.*?' . DIRECTORY_SEPARATOR . $wp_content_dir . DIRECTORY_SEPARATOR . '(.*)$#', '$1', $this->stylesheet->src, 1); // the part after 'wp-content'
-	$this->source_path = WP_CONTENT_DIR  . DIRECTORY_SEPARATOR . $lessfile_in_theme;
+  
+    $lessfile_in_theme = str_replace(content_url(), '', $this->stylesheet->src);
+    $this->source_path = WP_CONTENT_DIR . $lessfile_in_theme;
+  
     $this->source_uri =     $this->stylesheet->src;
     $this->target_path =    self::$upload_dir.$target_file;
     $this->target_uri =     self::$upload_uri.$target_file;
