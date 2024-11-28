@@ -1,3 +1,6 @@
 .DS_Store
 .svn
 .idea
+DOCKER_ENV
+output.log
+.github
