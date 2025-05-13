@@ -17,7 +17,7 @@ jobs:
 
     - name: WordPress Plugin Deploy
       if: ${{ github.event_name == 'release' }}
-      uses: 10up/action-wordpress-plugin-deploy@2.0.0
+      uses: 10up/action-wordpress-plugin-deploy@2.3.0
       env:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
