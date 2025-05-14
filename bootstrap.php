@@ -6,6 +6,7 @@ Author: thom4
 Author URI: https://thom4.net/
 Plugin URI: https://github.com/thom4parisot/wp-less/
 License: Apache-2.0
+Version: 1.9.8
 */
 
 if (!class_exists('WPLessPluginLoader'))
