@@ -1,7 +1,8 @@
 === WP-LESS ===
 Contributors: fabrizim,oncletom
+License: Apache-2.0
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=752034
-Tags: dev, theme, themes, toolkit, plugin-toolkit, less, lesscss, lessc, lessphp, productivity, style, stylesheet, api
+Tags: toolkit, lesscss, lessphp, styles, stylesheet
 Requires at least: 3.2
 Tested up to: 5.8
 Stable tag: trunk

@@ -3,16 +3,16 @@
     "require": {
         "oyejorge/less.php": "~1.7",
         "leafo/lessphp": "~0.5",
-        "wikimedia/less.php" : "~3.1"
+        "wikimedia/less.php" : "~3.2"
     },
     "autoload": {
       "classmap": ["lib/"]
     },
-    "license": "GPL-2.0",
+    "license": "Apache-2.0",
     "authors": [
         {
-            "name": "oncletom",
-            "email": "hi@oncletom.io"
+            "name": "thom4",
+            "email": "hi@thom4.net"
         }
     ]
 }
