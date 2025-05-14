@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: toolkit, lesscss, lessphp, styles, stylesheet
 Requires at least: 3.2
 Tested up to: 5.8
-Stable tag: trunk
+Stable tag: 1.9.7
 
 Implementation of LESS (Leaner CSS) in order to make themes development easier.
 
