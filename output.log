@@ -1,0 +1,64 @@
+Running php-build composer
+WARNING! Your password will be stored unencrypted in /home/runner/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+Pulling docker.pkg.github.com/oncletom/wp-less/php-actions_composer_wp-less:php-latest-build2
+php-latest-build2: Pulling from oncletom/wp-less/php-actions_composer_wp-less
+a0d0a0d46f8b: Pulling fs layer
+153eea49496a: Pulling fs layer
+11efd0df1fcb: Pulling fs layer
+b3f3214c344d: Pulling fs layer
+6b773013e8ac: Pulling fs layer
+dc6d797d83c8: Pulling fs layer
+66d7e4d212e9: Pulling fs layer
+071d4aa8c63e: Pulling fs layer
+e917640f6ebf: Pulling fs layer
+24574ea401c2: Pulling fs layer
+dc6d797d83c8: Waiting
+66d7e4d212e9: Waiting
+071d4aa8c63e: Waiting
+e917640f6ebf: Waiting
+b3f3214c344d: Waiting
+24574ea401c2: Waiting
+6b773013e8ac: Waiting
+11efd0df1fcb: Verifying Checksum
+11efd0df1fcb: Download complete
+153eea49496a: Download complete
+a0d0a0d46f8b: Verifying Checksum
+a0d0a0d46f8b: Download complete
+a0d0a0d46f8b: Pull complete
+b3f3214c344d: Verifying Checksum
+b3f3214c344d: Download complete
+dc6d797d83c8: Verifying Checksum
+dc6d797d83c8: Download complete
+153eea49496a: Pull complete
+6b773013e8ac: Verifying Checksum
+6b773013e8ac: Download complete
+11efd0df1fcb: Pull complete
+b3f3214c344d: Pull complete
+071d4aa8c63e: Verifying Checksum
+071d4aa8c63e: Download complete
+6b773013e8ac: Pull complete
+e917640f6ebf: Verifying Checksum
+e917640f6ebf: Download complete
+dc6d797d83c8: Pull complete
+66d7e4d212e9: Verifying Checksum
+66d7e4d212e9: Download complete
+24574ea401c2: Verifying Checksum
+24574ea401c2: Download complete
+66d7e4d212e9: Pull complete
+071d4aa8c63e: Pull complete
+e917640f6ebf: Pull complete
+24574ea401c2: Pull complete
+Digest: sha256:1165214b6be012dfafef67c3ddae866c8e3f25636c560f074c5aaa8a613c8b7c
+Status: Downloaded newer image for docker.pkg.github.com/oncletom/wp-less/php-actions_composer_wp-less:php-latest-build2
+docker.pkg.github.com/oncletom/wp-less/php-actions_composer_wp-less:php-latest-build2
+Docker tag: docker.pkg.github.com/oncletom/wp-less/php-actions_composer_wp-less:php-latest-build2
+No private keys supplied
+Command: composer install --no-progress --no-interaction
+Skipping env variable PWD
+Skipping env variable HOME
+Skipping env variable SHLVL
+Skipping env variable PATH
