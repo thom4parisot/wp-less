@@ -87,6 +87,7 @@ class WPLessStylesheet
 	$wp_content_dir = str_replace(ABSPATH, '', WP_CONTENT_DIR); // get the 'wp-content' part of the path
 	$lessfile_in_theme = preg_replace ('#^.*?' . DIRECTORY_SEPARATOR . $wp_content_dir . DIRECTORY_SEPARATOR . '(.*)$#', '$1', $this->stylesheet->src, 1); // the part after 'wp-content'
 	$this->source_path = WP_CONTENT_DIR  . DIRECTORY_SEPARATOR . $lessfile_in_theme;
+	$this->source_path = apply_filters('wp-less/source_path', $this->souce_path);
     $this->source_uri =     $this->stylesheet->src;
     $this->target_path =    self::$upload_dir.$target_file;
     $this->target_uri =     self::$upload_uri.$target_file;
