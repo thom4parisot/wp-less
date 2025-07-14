@@ -315,12 +315,16 @@ class WPLessPlugin extends WPPluginToolkitPlugin
 
                 // Remove version from uri
                 $parts = parse_url( $style_sheet );
+                
+                $parts['port'] = (isset($parts['port'])) ? $parts['port'] : false;
+                $parts['path'] = (isset($parts['path'])) ? $parts['path'] : '';
+                
                 $style_sheet = $parts['scheme'] . '://' . $parts['host'] . (!$parts['port'] ? '' : (':' . $parts['port'])) .  $parts['path'];
 
                 // Get extension and set handle for wp_register_style()
                 $pathinfo = pathinfo($style_sheet);
-                $extension = $pathinfo['extension'];
-                $handle = $pathinfo['filename'];
+                $extension = (isset($pathinfo['extension'])) ? $pathinfo['extension'] : '';
+                $handle = (isset($pathinfo['filename'])) ? $pathinfo['filename'] : '';
 
                 // Only process less files
                 if( $extension === 'less' ) {
