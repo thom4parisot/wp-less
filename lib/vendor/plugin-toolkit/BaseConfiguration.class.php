@@ -289,6 +289,12 @@ abstract class WPPluginToolkitConfiguration
       }
     }
 
+    // If the request is https, make sure we generate a https url.
+    if( is_ssl() )
+    {
+      $url = str_replace( 'http://', 'https://', $url );
+    }
+
     $uploads = apply_filters('upload_dir', array(
       'path' =>     $dir,
       'url' =>      $url,
