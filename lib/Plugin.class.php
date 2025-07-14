@@ -31,6 +31,12 @@ class WPLessPlugin extends WPPluginToolkitPlugin
     protected $compiler = null;
 
     /**
+     * @private
+     * @var null|string
+     */
+    private $_TmpBaseDir = null;
+
+    /**
      * @static
      * @var Pattern used to match stylesheet files to process them as pure CSS
      */
