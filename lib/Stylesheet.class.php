@@ -17,7 +17,9 @@ class WPLessStylesheet
             $source_timestamp,
             $source_uri,
             $target_path,
-            $target_uri;
+            $target_map_path,
+            $target_uri,
+            $target_map_uri;
 
   public static $upload_dir,
                 $upload_uri;
@@ -61,12 +63,12 @@ class WPLessStylesheet
    * @version 1.0
    * @return string
    */
-  public function computeTargetPath()
+  public function computeTargetPath($ext = 'css')
   {
     $target_path = preg_replace('#^'.get_theme_root_uri().'#U', '', $this->stylesheet->src);
     $target_path = preg_replace('/.less$/U', '', $target_path);
 
-    $target_path .= '-%s.css';
+    $target_path .= '-%s.'.$ext;
 
     return apply_filters('wp-less_stylesheet_compute_target_path', $target_path);
   }
@@ -83,6 +85,7 @@ class WPLessStylesheet
   protected function configurePath()
   {
     $target_file =          $this->computeTargetPath();
+	$target_map_file =          $this->computeTargetPath('map');
     // path to local "wp-content" dir does not match URI in multisite.
 	$wp_content_dir = str_replace(ABSPATH, '', WP_CONTENT_DIR); // get the 'wp-content' part of the path
 	$lessfile_in_theme = preg_replace ('#^.*?' . DIRECTORY_SEPARATOR . $wp_content_dir . DIRECTORY_SEPARATOR . '(.*)$#', '$1', $this->stylesheet->src, 1); // the part after 'wp-content'
@@ -90,7 +93,9 @@ class WPLessStylesheet
     $this->source_uri =     $this->stylesheet->src;
     $this->target_path =    self::$upload_dir.$target_file;
     $this->target_uri =     self::$upload_uri.$target_file;
-
+    $this->target_map_path =    self::$upload_dir.$target_map_file;
+    $this->target_map_uri =     self::$upload_uri.$target_map_file;
+	
     $this->setSourceTimestamp(filemtime($this->source_path));
   }
 
@@ -161,7 +166,11 @@ class WPLessStylesheet
   {
     return sprintf($this->target_path, $this->signature);
   }
-
+  
+  public function getTargetMapPath()
+  {
+    return sprintf($this->target_map_path, $this->signature);
+  }
   /**
    * Returns target URI
    *
@@ -177,6 +186,10 @@ class WPLessStylesheet
     return sprintf($this->target_uri, $this->signature);
   }
 
+  public function getTargetMapUri()
+  {
+    return sprintf($this->target_map_uri, $this->signature);
+  }
   /**
    * Tells if compilation is needed
    *
