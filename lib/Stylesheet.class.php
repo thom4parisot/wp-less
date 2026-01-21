@@ -64,6 +64,7 @@ class WPLessStylesheet
   public function computeTargetPath()
   {
     $target_path = preg_replace('#^'.get_theme_root_uri().'#U', '', $this->stylesheet->src);
+    $target_path = preg_replace('#^'.rtrim(plugin_dir_url(basename(__DIR__)),'/').'#U', '', $target_path);
     $target_path = preg_replace('/.less$/U', '', $target_path);
 
     $target_path .= '-%s.css';
